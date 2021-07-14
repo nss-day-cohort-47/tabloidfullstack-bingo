@@ -5,6 +5,7 @@ import Register from "./Register";
 import Hello from "./Hello";
 import CategoryList from "./CategoryList";
 import PostList from "./PostList";
+import CommentList from "./CommentList";
 
 
 export default function ApplicationViews({ isLoggedIn }) {
@@ -22,6 +23,10 @@ export default function ApplicationViews({ isLoggedIn }) {
         {/* <Route path="/posts">
           <PostList />
         </Route> */}
+
+        <Route path="/comments">
+          {isLoggedIn ? <CommentList /> : <Redirect to="/login" />}
+        </Route>
 
         <Route path="/login">
           <Login />
