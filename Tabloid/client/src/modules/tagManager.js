@@ -10,7 +10,7 @@ export const getAllTags = () => {
       headers: {
         Authorization: `Bearer ${token}`
       }
-    }).then(resp => resp.ok));
+    }).then(resp => resp.json()));
 };
 
 export const addTag = (tag) => {
