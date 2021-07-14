@@ -17,8 +17,8 @@ const CategoryList = () => {
     return (
         <>
             <h2>Categories</h2>
+            <Link to={``}><button className="btn btn-primary" type="button">Add a Category</button></Link>
             <div>
-
                 {categories.map((category) =>
                 (<Category
                     category={category}

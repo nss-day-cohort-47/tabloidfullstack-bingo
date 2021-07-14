@@ -13,3 +13,14 @@ export const getAllCategories = () => {
             }
         }).then((res) => res.json()));
 };
+
+export const addCategory = () => {
+    return getToken().then((token) => {
+        fetch(`${baseUrl}`, {
+            method: "POST",
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }).then((res) => res.json());
+    })
+}
