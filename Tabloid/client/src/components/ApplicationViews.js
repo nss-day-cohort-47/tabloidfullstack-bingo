@@ -19,9 +19,9 @@ export default function ApplicationViews({ isLoggedIn }) {
         <Route path="/categories">
           {isLoggedIn ? <CategoryList /> : <Redirect to="/login" />}
         </Route>
-        <Route path="/posts">
+        {/* <Route path="/posts">
           <PostList />
-        </Route>
+        </Route> */}
 
         <Route path="/login">
           <Login />
