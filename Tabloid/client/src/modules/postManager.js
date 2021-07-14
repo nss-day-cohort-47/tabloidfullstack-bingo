@@ -15,8 +15,25 @@ export const getAllPublishedPosts = () => {
       if (res.ok) {
         return res.json();
       } else {
-        throw new Error("An unknown error occorred while trying to fetch all posts");
+        throw new Error("An unknown error occurred while trying to fetch all posts");
       }
     });
   });
 };
+
+export const getAllUserPosts = (FirebaseUID) => {
+  return getToken().then((token) => {
+    return fetch(`${ baseUrl }/${ FirebaseUID }`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${ token }`
+      }
+    }).then(res => {
+      if (res.ok) {
+        return res.json();
+      } else {
+        throw new Error("Something happened while attempting to fetch your posts")
+      }
+    })
+  })
+}

@@ -4,6 +4,7 @@ import Login from "./Login";
 import Register from "./Register";
 import Hello from "./Hello";
 import PostList from "./PostList";
+import MyPosts from "./MyPosts";
 
 
 export default function ApplicationViews({ isLoggedIn }) {
@@ -15,9 +16,9 @@ export default function ApplicationViews({ isLoggedIn }) {
           { isLoggedIn ? <PostList /> : <Redirect to="/login" /> }
         </Route>
 
-        {/* <Route path="/posts">
-          <PostList />
-        </Route> */}
+        <Route path="/myPosts">
+          <MyPosts />
+        </Route>
 
         <Route path="/login">
           <Login />
