@@ -1,11 +1,17 @@
 import React from "react";
+import { Card, CardBody } from "reactstrap";
 
-const Category = ({ category }) => {
+export const Category = ({ category }) => {
     return (
-        <div>
-            <h3>{category.Name}</h3>
-            <p>{category.Id}</p>
-        </div>
+        <>
+            <Card>
+
+                <div>
+                    <h3>{category.name}</h3>
+                    <p>{category.id}</p>
+                </div>
+            </Card>
+        </>
     );
 }
 
