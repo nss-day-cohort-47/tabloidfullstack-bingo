@@ -26,6 +26,10 @@ export default function Header({ isLoggedIn }) {
             {isLoggedIn &&
               <NavItem>
                 <NavLink tag={RRNavLink} to="/">Home</NavLink>
+              </NavItem>
+            }
+            {isLoggedIn &&
+              <NavItem>
                 <NavLink tag={RRNavLink} to="/tag">Tags</NavLink>
               </NavItem>
             }
