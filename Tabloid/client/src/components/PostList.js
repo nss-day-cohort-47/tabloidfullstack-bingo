@@ -15,6 +15,7 @@ const PostList = () => {
 
   return (
     <>
+      <h1>Latest Posts</h1>
       <div className="container">
         <div className="row justify-content-center">
           { posts.map((post) => (
