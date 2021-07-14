@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
@@ -11,24 +11,19 @@ const firebaseConfig = {
 };
 firebase.initializeApp(firebaseConfig);
 
+const currentUser = firebase.auth().currentUser;
 
-const getUser = () => {
-  const firebaseUserId = () => firebase.auth().onAuthStateChanged((user) => {
-    if (user) {
-      // User is signed in, see docs for a list of available properties
-      // https://firebase.google.com/docs/reference/js/firebase.User
-      console.log('firebase user', user.uid)
-      return user.uid;
+console.log('currentUser', currentUser)
 
-    }
-  })
-  return firebaseUserId();
-};
-
-// getUser().then(res => console.log('res', res))
-
-console.log('userId', getUser())
-
+let currentUserId = '';
+firebase.auth().onAuthStateChanged((user) => {
+  if (user) {
+    // User is signed in, see docs for a list of available properties
+    // https://firebase.google.com/docs/reference/js/firebase.User
+    console.log('firebase user', user.uid)
+    currentUserId = user.uid;
+  }
+})
 
 
 ReactDOM.render(
