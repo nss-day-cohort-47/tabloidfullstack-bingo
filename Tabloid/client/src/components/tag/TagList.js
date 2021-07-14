@@ -13,14 +13,18 @@ const TagList = () => {
     getTags();
   }, []);
 
+  console.log(tags);
   return (
-    <div className="container">
-      <div className="row justify-content-center">
-        {tags.map((tag) => (
-          <tag tag={tag} key={tag.id} />
-        ))}
+    <>
+      <h3>Tags:</h3>
+      <div className="container">
+        <div className="row justify-content-center">
+          {tags.map((tag) => (
+            <Tag tag={tag} key={tag.id} />
+          ))}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

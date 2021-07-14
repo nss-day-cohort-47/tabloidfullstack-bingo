@@ -1,7 +1,7 @@
 import React from "react";
 import { Card, CardBody } from "reactstrap";
 
-const Tag = ({ tag }) => {
+export const Tag = ({ tag }) => {
   return (
     <Card >
       <CardBody>
