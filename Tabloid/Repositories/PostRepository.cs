@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Tabloid.Models;
 using Tabloid.Utils;
@@ -56,7 +57,7 @@ namespace Tabloid.Repositories
             }
         }
 
-        public List<Post> GetAllUserPosts(int id)
+        public List<Post> GetAllUserPosts(string FirebaseUserId)
         {
             using (var conn = Connection)
             {
@@ -77,9 +78,9 @@ namespace Tabloid.Repositories
                               LEFT JOIN Category c ON p.CategoryId = c.id
                               LEFT JOIN UserProfile u ON p.UserProfileId = u.id
                               LEFT JOIN UserType ut ON u.UserTypeId = ut.id
-                        WHERE IsApproved = 1 AND PublishDateTime < SYSDATETIME() AND p.UserProfileId = @id
+                        WHERE IsApproved = 1 AND PublishDateTime < SYSDATETIME() AND u.FirebaseUserId = @FirebaseUserId
                         ORDER BY PublishDateTime DESC";
-                    DbUtils.AddParameter(cmd, "@id", id);
+                    DbUtils.AddParameter(cmd, "@FirebaseUserId", FirebaseUserId);
                     var reader = cmd.ExecuteReader();
 
                     var posts = new List<Post>();
@@ -131,5 +132,7 @@ namespace Tabloid.Repositories
                 }
             };
         }
+
+
     }
 }

@@ -5,10 +5,10 @@ const _apiUrl = "/api/userprofile";
 
 const _doesUserExist = (firebaseUserId) => {
   return getToken().then((token) =>
-    fetch(`${_apiUrl}/DoesUserExist/${firebaseUserId}`, {
+    fetch(`${ _apiUrl }/DoesUserExist/${ firebaseUserId }`, {
       method: "GET",
       headers: {
-        Authorization: `Bearer ${token}`
+        Authorization: `Bearer ${ token }`
       }
     }).then(resp => resp.ok));
 };
@@ -18,14 +18,12 @@ const _saveUser = (userProfile) => {
     fetch(_apiUrl, {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${ token }`,
         "Content-Type": "application/json"
       },
       body: JSON.stringify(userProfile)
     }).then(resp => resp.json()));
 };
-
-
 
 export const getToken = () => firebase.auth().currentUser.getIdToken();
 
@@ -55,9 +53,9 @@ export const logout = () => {
 
 export const register = (userProfile, password) => {
   return firebase.auth().createUserWithEmailAndPassword(userProfile.email, password)
-    .then((createResponse) => _saveUser({ 
-      ...userProfile, 
-      firebaseUserId: createResponse.user.uid 
+    .then((createResponse) => _saveUser({
+      ...userProfile,
+      firebaseUserId: createResponse.user.uid
     }));
 };
 
@@ -67,3 +65,4 @@ export const onLoginStatusChange = (onLoginStatusChangeHandler) => {
     onLoginStatusChangeHandler(!!user);
   });
 };
+

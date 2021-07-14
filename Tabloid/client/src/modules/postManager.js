@@ -2,6 +2,7 @@ import { getToken } from './authManager'
 
 const baseUrl = '/api/post';
 
+
 //check to see if a user is logged in and then fetch all published posts
 export const getAllPublishedPosts = () => {
   return getToken().then((token) => {

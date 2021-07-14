@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Tabloid.Repositories;
 
@@ -23,13 +24,14 @@ namespace Tabloid.Controllers
         {
             return Ok(_postRepository.GetAllPublishedPosts());
         }
-
-        [HttpGet("{id}")]
-        public IActionResult GetAllUserPosts(int id)
+        // Fetch all posts from user based on user Id
+        [HttpGet("{FirebaseUserId}")]
+        public IActionResult GetAllUserPosts(string FirebaseUserId)
         {
-            var posts = _postRepository.GetAllUserPosts(id);
+            var posts = _postRepository.GetAllUserPosts(FirebaseUserId);
 
             return Ok(posts);
         }
+
     };
 }
