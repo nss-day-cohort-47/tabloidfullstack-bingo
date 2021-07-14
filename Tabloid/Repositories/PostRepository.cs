@@ -12,6 +12,10 @@ namespace Tabloid.Repositories
     public class PostRepository : BaseRepository, IPostRepository
     {
         public PostRepository(IConfiguration configuration) : base(configuration) { }
+        /// <summary>
+        /// Fetch all published posts
+        /// </summary>
+        /// <returns>List of all published posts</returns>
         public List<Post> GetAllPublishedPosts()
         {
             using (var conn = Connection)

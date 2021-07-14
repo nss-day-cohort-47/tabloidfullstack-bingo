@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { getAllPublishedPosts } from "../modules/postManager";
 import Post from "./Post";
 
+//Display all published posts
 const PostList = () => {
   const [ posts, setPosts ] = useState([]);
 

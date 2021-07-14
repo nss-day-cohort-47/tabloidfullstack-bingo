@@ -2,6 +2,7 @@ import React from "react";
 import { Card, CardBody } from "reactstrap";
 import { Link } from "react-router-dom";
 
+//render a single post
 const Post = ({ post }) => {
   return (
     <Card>
