@@ -3,6 +3,7 @@ import { Switch, Route, Redirect } from "react-router-dom";
 import Login from "./Login";
 import Register from "./Register";
 import Hello from "./Hello";
+import TagList from "./tag/TagList";
 
 import UserProfileList from "./UserProfileList";
 import CategoryList from "./CategoryList";
@@ -36,6 +37,11 @@ export default function ApplicationViews({ isLoggedIn }) {
         <Route path="/register">
           <Register />
         </Route>
+
+        <Route path="/tag">
+          <TagList />
+        </Route>
+
       </Switch>
     </main>
   );
