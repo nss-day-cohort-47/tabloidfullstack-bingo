@@ -12,10 +12,9 @@ const UserProfileList = () => {
     useEffect(() => {
         getUserProfiles();
     }, []);
+    //* console.log("USER PROFILES:", userProfiles)
 
-    console.log("USER PROFILES:", userProfiles)
     return (
-
         <div className="container">
             <div className="row justify-content-center">
                 {userProfiles.map((userProfile) => (

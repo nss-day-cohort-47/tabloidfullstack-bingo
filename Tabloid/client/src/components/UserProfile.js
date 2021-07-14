@@ -3,8 +3,7 @@ import { Card, CardBody } from "reactstrap";
 import { Link } from "react-router-dom";
 
 const UserProfile = ({ userProfile }) => {
-    console.log("USER PROFILE: ", userProfile);
-    console.log("USER IMAGE: ", userProfile);
+    //* console.log("USER PROFILE: ", userProfile.displayName);
     return (
         <Card className="alignCenter border alignCenter justifyCenter">
             <p className="text-left px-2">Tabloid User Profile:</p>
