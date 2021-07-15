@@ -2,10 +2,10 @@ import React from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import Login from "./Login";
 import Register from "./Register";
-import Hello from "./Hello";
 import TagList from "./tag/TagList";
 
-import UserProfileList from "./UserProfileList";
+import UserProfileList from "./userProfile/UserProfileList";
+import UserProfileDetails from "./userProfile/UserProfileDetails";
 import CategoryList from "./CategoryList";
 import PostList from "./PostList";
 import CommentList from "./comments/CommentList";
@@ -36,12 +36,16 @@ export default function ApplicationViews({ isLoggedIn }) {
         {/* <Route path="/posts">
           <PostList />
         </Route> */}
+        <Route path="/UserProfiles" exact>
+          {isLoggedIn ? <UserProfileList /> : <Redirect to="/login" />}
+        </Route>
 
         <Route path="/comments">
           {isLoggedIn ? <CommentList /> : <Redirect to="/login" />}
         </Route>
-        <Route path="/UserProfiles">
-          {isLoggedIn ? <UserProfileList /> : <Redirect to="/login" />}
+
+        <Route path="/UserProfiles/:id">
+          {isLoggedIn ? <UserProfileDetails /> : <Redirect to="/login" />}
         </Route>
 
         <Route path="/login">
