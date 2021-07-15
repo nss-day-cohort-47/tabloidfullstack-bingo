@@ -53,5 +53,74 @@ namespace Tabloid.Repositories
                 }
             }
         }
+
+        public void Add(Comment comment)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                    INSERT INTO Comment (PostId, UserProfileId, Subject, Content, CreateDateTime)
+                    OUTPUT INSERTED.ID
+                    VALUES (@PostId, @UserProfileId, @Subject, @Content, @CreateDateTime)
+                    ";
+
+                    DbUtils.AddParameter(cmd, "@PostId", comment.PostId);
+                    DbUtils.AddParameter(cmd, "@UserProfileId", comment.UserProfileId);
+                    DbUtils.AddParameter(cmd, "@Subject", comment.Subject);
+                    DbUtils.AddParameter(cmd, "@Content", comment.Content);
+                    DbUtils.AddParameter(cmd, "@CreateDateTime", comment.CreateDateTime);
+
+                    comment.Id = (int)cmd.ExecuteScalar();
+                }
+            }
+        }
+
+        public void Update(Comment comment)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                    UPDATE Comment
+                    SET PostId = @PostId,
+                        UserProfileId = @UserProfileId,
+                        Subject = @Subject,
+                        Content = @Content,
+                        CreateDateTime = @CreateDateTime
+                    WHERE Id = @Id
+                    ";
+
+                    DbUtils.AddParameter(cmd, "@PostId", comment.PostId);
+                    DbUtils.AddParameter(cmd, "@UserProfileId", comment.UserProfileId);
+                    DbUtils.AddParameter(cmd, "@Subject", comment.Subject);
+                    DbUtils.AddParameter(cmd, "@Content", comment.Content);
+                    DbUtils.AddParameter(cmd, "@CreateDateTime", comment.CreateDateTime);
+                    DbUtils.AddParameter(cmd, "@Id", comment.Id);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public void Delete(int id)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"UPDATE Comment SET isDeleted=@IsDeleted WHERE Id=@Id";
+                    cmd.Parameters.AddWithValue("@IsDeleted", 1);
+                    cmd.Parameters.AddWithValue("@Id", id);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
     }
 }
