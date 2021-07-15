@@ -20,7 +20,7 @@ namespace Tabloid.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                    SELECT Id, Name
+                    SELECT Id, Name, IsDeleted
                         
                     FROM Tag";
 
@@ -60,19 +60,34 @@ namespace Tabloid.Repositories
                 }
             }
 
-            /*
-            public Tag GetByFirebaseUserId(string firebaseUserId)
+        public void Delete(int id)
+        {
+            using (var conn = Connection)
             {
-                return _context.Tag
-                           .Include(up => up.UserType) 
-                           .FirstOrDefault(up => up.FirebaseUserId == firebaseUserId);
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"UPDATE Comment SET isDeleted=@IsDeleted WHERE Id=@Id";
+                    cmd.Parameters.AddWithValue("@IsDeleted", 1);
+                    cmd.Parameters.AddWithValue("@Id", id);
+                    cmd.ExecuteNonQuery();
+                }
             }
-
-            public void Add(Tag tag)
-            {
-                _context.Add(tag);
-                _context.SaveChanges();
-            }
-            */
         }
+
+        /*
+        public Tag GetByFirebaseUserId(string firebaseUserId)
+        {
+            return _context.Tag
+                       .Include(up => up.UserType) 
+                       .FirstOrDefault(up => up.FirebaseUserId == firebaseUserId);
+        }
+
+        public void Add(Tag tag)
+        {
+            _context.Add(tag);
+            _context.SaveChanges();
+        }
+        */
+    }
 }
