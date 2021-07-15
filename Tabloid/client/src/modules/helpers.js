@@ -1,13 +1,6 @@
-import firebase from "firebase/app";
+export const dateFixer = (post) => {
+  const date = new Date(post.publishDateTime);
+  const humanDate = (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear()
 
-export const getCurrentUser = () => {
-  let userId = '';
-  firebase.auth().onAuthStateChanged((user) => {
-    if (user) {
-      // User is signed in, see docs for a list of available properties
-      // https://firebase.google.com/docs/reference/js/firebase.User
-      userId = user.uid
-    }
-  })
-  return userId;
+  return humanDate
 }
