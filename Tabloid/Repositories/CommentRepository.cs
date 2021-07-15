@@ -25,7 +25,7 @@ namespace Tabloid.Repositories
                     FROM Comment c
                     JOIN Post p ON p.Id = c.PostId
                     JOIN UserProfile up ON up.Id = c.UserProfileId
-                    WHERE c.PostId = @id
+                    WHERE c.PostId = @id AND c.IsDeleted = 0
                     ORDER BY CreateDateTime ASC
                     ";
                     cmd.Parameters.AddWithValue("@id", id);
@@ -72,6 +72,7 @@ namespace Tabloid.Repositories
                     DbUtils.AddParameter(cmd, "@Subject", comment.Subject);
                     DbUtils.AddParameter(cmd, "@Content", comment.Content);
                     DbUtils.AddParameter(cmd, "@CreateDateTime", comment.CreateDateTime);
+
 
                     comment.Id = (int)cmd.ExecuteScalar();
                 }
