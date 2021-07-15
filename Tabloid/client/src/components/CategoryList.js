@@ -21,7 +21,7 @@ const CategoryList = () => {
         <>
             <h2>Categories</h2>
             <button type="button" className="btn btn-primary"
-                onClick={() => history.push("/categories/create")}>
+                onClick={() => history.push("/Category/create")}>
                 Add New Category
             </button>
             <div>

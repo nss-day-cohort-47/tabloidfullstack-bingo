@@ -50,11 +50,10 @@ namespace Tabloid.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                                        INSERT INTO Category (Id, Name)
+                                        INSERT INTO Category (Name)
                                         OUTPUT INSERTED.ID
-                                        VALUES (@Id, @Name)
+                                        VALUES (@Name)
                                         ";
-                    DbUtils.AddParameter(cmd, "@Id", category.Id);
                     DbUtils.AddParameter(cmd, "@Name", category.Name);
 
                     category.Id = (int)cmd.ExecuteScalar();
