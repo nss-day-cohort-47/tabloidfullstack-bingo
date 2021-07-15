@@ -39,15 +39,15 @@ export const deleteCategory = (id) => {
     })
 }
 
-export const editCategory = (categoryObj) => {
+export const editCategory = (id) => {
     return getToken().then((token) => {
-        fetch(`${baseUrl}/${categoryObj.id}`, {
-            method: "UPDATE",
+        fetch(`${baseUrl}/${id}`, {
+            method: "PUT",
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify(categoryObj)
+            // body: JSON.stringify(categoryObj)
         }).then((res) => res.json());
     })
 }

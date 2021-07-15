@@ -76,7 +76,7 @@ namespace Tabloid.Repositories
                 }
             }
         }
-        public void EditCategory(Category category, int id)
+        public void EditCategory(Category category)
         {
             using (var conn = Connection)
             {
@@ -88,7 +88,7 @@ namespace Tabloid.Repositories
                                         SET Name = @Name
                                         WHERE Id = @id
                                       ";
-                    DbUtils.AddParameter(cmd, "@Id", id);
+                    DbUtils.AddParameter(cmd, "@Id", category.Id);
                     DbUtils.AddParameter(cmd, "@Name", category.Name);
 
                     cmd.ExecuteNonQuery();
