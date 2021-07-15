@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Tabloid.Models;
+using Tabloid.Utils;
 
 namespace Tabloid.Repositories
 {
@@ -37,6 +38,25 @@ namespace Tabloid.Repositories
                     reader.Close();
 
                     return categories;
+                }
+            }
+        }
+
+        public void AddCategory(Category category)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                                        INSERT INTO Category (Name)
+                                        OUTPUT INSERTED.ID
+                                        VALUES (@Name)
+                                        ";
+                    DbUtils.AddParameter(cmd, "@Name", category.Name);
+
+                    category.Id = (int)cmd.ExecuteScalar();
                 }
             }
         }
