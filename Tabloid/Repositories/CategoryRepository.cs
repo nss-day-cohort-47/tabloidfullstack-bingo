@@ -76,7 +76,7 @@ namespace Tabloid.Repositories
                 }
             }
         }
-        public void EditCategory(Category category)
+        public void EditCategory(Category category, int id)
         {
             using (var conn = Connection)
             {
@@ -86,10 +86,43 @@ namespace Tabloid.Repositories
                     cmd.CommandText = @"
                                         UPDATE Category
                                         SET Name = @Name
+                                        WHERE Id = @id
                                       ";
+                    DbUtils.AddParameter(cmd, "@Id", id);
                     DbUtils.AddParameter(cmd, "@Name", category.Name);
 
                     cmd.ExecuteNonQuery();
+                }
+            }
+        }
+        public Category GetById(int id)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                        SELECT Id, Name
+                          FROM Category
+                         WHERE Id = @id";
+
+                    DbUtils.AddParameter(cmd, "@id", id);
+
+                    Category category = null;
+
+                    var reader = cmd.ExecuteReader();
+                    if (reader.Read())
+                    {
+                        category = new Category()
+                        {
+                            Id = DbUtils.GetInt(reader, "Id"),
+                            Name = DbUtils.GetString(reader, "Name")
+                        };
+                    }
+                    reader.Close();
+
+                    return category;
                 }
             }
         }

@@ -45,8 +45,18 @@ namespace Tabloid.Controllers
             {
                 return BadRequest();
             }
-            _categoryRepo.EditCategory(category);
+            _categoryRepo.EditCategory(category, id);
             return NoContent();
+        }
+        [HttpGet("{id}")]
+        public IActionResult Get(int id)
+        {
+            var category = _categoryRepo.GetById(id);
+            if (category == null)
+            {
+                return NotFound();
+            }
+            return Ok(category);
         }
     }
 }
