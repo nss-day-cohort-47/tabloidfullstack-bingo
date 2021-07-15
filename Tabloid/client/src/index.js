@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
@@ -11,8 +11,9 @@ const firebaseConfig = {
 };
 firebase.initializeApp(firebaseConfig);
 
+
 ReactDOM.render(
-    <App />,
+  <App />,
   document.getElementById('root')
 );
 
