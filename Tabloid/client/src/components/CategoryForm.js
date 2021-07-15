@@ -6,7 +6,7 @@ import { addCategory } from "../modules/categoryManager";
 const CategoryForm = () => {
     const [isLoading, setIsLoading] = useState(false)
     const [category, setCategory] = useState({
-        Name: ""
+        name: ""
     })
 
     const history = useHistory()
@@ -33,9 +33,9 @@ const CategoryForm = () => {
         <>
             <Form>
                 <FormGroup>
-                    <label for="name">Name</label>
+                    <label htmlFor="name">Name</label>
                     <input type="text" name="name" id="name" placeholder="category name"
-                        value={category.name}
+                        defaultValue={category.name}
                         onChange={handleInputChange} />
                 </FormGroup>
                 <button className="btn btn-primary"
