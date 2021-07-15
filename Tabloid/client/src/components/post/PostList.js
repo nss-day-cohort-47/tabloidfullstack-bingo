@@ -1,26 +1,22 @@
-import React, { useEffect, useState } from 'react';
-import ReactDOM from 'react-dom';
-import firebase from "firebase/app";
-import { getAllUserPosts } from '../modules/postManager';
+import React, { useEffect, useState } from "react";
+import { getAllPublishedPosts } from "../../modules/postManager";
 import Post from "./Post";
 
-const MyPosts = () => {
-
+//Display all published posts
+const PostList = () => {
   const [ posts, setPosts ] = useState([]);
 
-
-  const fetchUserPosts = () => {
-    return getAllUserPosts().then(posts => setPosts(posts))
+  const fetchPosts = () => {
+    return getAllPublishedPosts().then(posts => setPosts(posts));
   }
 
-
   useEffect(() => {
-    fetchUserPosts();
+    fetchPosts();
   }, []);
 
   return (
     <>
-      <h1>My Posts</h1>
+      <h1>Latest Posts</h1>
       <div className="container">
         <div className="row justify-content-center">
           { posts.map((post) => (
@@ -30,7 +26,6 @@ const MyPosts = () => {
       </div>
     </>
   )
-
 };
 
-export default MyPosts;
+export default PostList;

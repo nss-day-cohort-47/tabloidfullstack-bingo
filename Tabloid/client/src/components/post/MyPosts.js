@@ -1,22 +1,24 @@
-import React, { useEffect, useState } from "react";
-import { getAllPublishedPosts } from "../modules/postManager";
+import React, { useEffect, useState } from 'react';
+import { getAllUserPosts } from '../../modules/postManager';
 import Post from "./Post";
 
-//Display all published posts
-const PostList = () => {
+const MyPosts = () => {
+
   const [ posts, setPosts ] = useState([]);
 
-  const fetchPosts = () => {
-    return getAllPublishedPosts().then(posts => setPosts(posts));
+
+  const fetchUserPosts = () => {
+    return getAllUserPosts().then(posts => setPosts(posts))
   }
 
+
   useEffect(() => {
-    fetchPosts();
+    fetchUserPosts();
   }, []);
 
   return (
     <>
-      <h1>Latest Posts</h1>
+      <h1>My Posts</h1>
       <div className="container">
         <div className="row justify-content-center">
           { posts.map((post) => (
@@ -26,6 +28,7 @@ const PostList = () => {
       </div>
     </>
   )
+
 };
 
-export default PostList;
+export default MyPosts;

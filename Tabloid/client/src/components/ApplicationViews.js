@@ -7,11 +7,11 @@ import TagList from "./tag/TagList";
 
 import UserProfileList from "./UserProfileList";
 import CategoryList from "./CategoryList";
-import PostList from "./PostList";
-import MyPosts from "./MyPosts";
+import PostList from "./post/PostList";
+import MyPosts from "./post/MyPosts";
 import TagForm from "./tag/TagForm";
 import CategoryForm from "./CategoryForm";
-
+import PostDetails from "./post/PostDetails";
 
 export default function ApplicationViews({ isLoggedIn }) {
 
@@ -25,6 +25,11 @@ export default function ApplicationViews({ isLoggedIn }) {
         <Route path="/myPosts">
           <MyPosts />
         </Route>
+
+        <Route path="/post/:id">
+          <PostDetails />
+        </Route>
+
         <Route path="/categories">
           { isLoggedIn ? <CategoryList /> : <Redirect to="/login" /> }
         </Route>

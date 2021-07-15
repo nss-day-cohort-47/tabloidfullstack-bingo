@@ -28,6 +28,7 @@ namespace Tabloid.Controllers
         {
             return Ok(_postRepository.GetAllPublishedPosts());
         }
+
         // Fetch all posts from current logged in user
         [HttpGet("GetAllUserPosts")]
         public IActionResult GetAllUserPosts()
@@ -44,9 +45,15 @@ namespace Tabloid.Controllers
             }
         }
 
+        [HttpGet("{id}")]
+        public IActionResult GetPostById(int id)
+        {
+            return Ok(_postRepository.GetPostById(id));
+        }
+
         private UserProfile GetCurrentUserProfile()
         {
-            var firebaseUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var firebaseUserId = User?.FindFirst(ClaimTypes.NameIdentifier).Value;
 
             if(firebaseUserId != null)
             {

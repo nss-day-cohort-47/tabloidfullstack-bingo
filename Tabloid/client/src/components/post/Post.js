@@ -1,11 +1,13 @@
 import React from "react";
 import { Card, CardBody } from "reactstrap";
 import { Link } from "react-router-dom";
+import { dateFixer } from "../../modules/helpers";
 
 //render a single post
 const Post = ({ post, category }) => {
-  const date = new Date(post.publishDateTime);
-  const publishDate = (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear()
+
+  const publishDate = dateFixer(post)
+
   return (
     <Card>
       <CardBody>
@@ -16,6 +18,9 @@ const Post = ({ post, category }) => {
           <p>{ cat.name }</p>
         )) } */}
         <p>Category: { category.name }</p>
+        <Link to={ `/post/${ post.id }` }>
+          <strong>Details</strong>
+        </Link>
         <p>Publish Date: { publishDate }</p>
       </CardBody>
     </Card>
