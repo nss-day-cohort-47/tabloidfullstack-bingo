@@ -10,6 +10,7 @@ export const Category = ({ category, handleDeleteCategory }) => {
                     <p>{category.id}</p>
                 </div>
                 <button type="button" className="btn btn-primary" onClick={() => handleDeleteCategory(category.id)}>Delete</button>
+                <Link to={`/Category/${category.id}/edit`}></Link><button type="button" className="btn btn-primary">Edit</button>
             </Card>
         </>
     );

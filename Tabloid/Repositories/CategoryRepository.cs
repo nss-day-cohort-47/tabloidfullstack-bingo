@@ -76,5 +76,22 @@ namespace Tabloid.Repositories
                 }
             }
         }
+        public void EditCategory(Category category)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                                        UPDATE Category
+                                        SET Name = @Name
+                                      ";
+                    DbUtils.AddParameter(cmd, "@Name", category.Name);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
     }
 }
