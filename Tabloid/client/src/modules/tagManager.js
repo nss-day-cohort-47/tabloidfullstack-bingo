@@ -14,13 +14,15 @@ export const getAllTags = () => {
 };
 
 export const addTag = (tag) => {
-  return fetch(baseUrl, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(tag),
-  });
+  return getToken().then((token) =>
+    fetch(baseUrl, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(tag),
+    })).then(resp => resp.json())
 };
 
 export const getToken = () => firebase.auth().currentUser.getIdToken();
