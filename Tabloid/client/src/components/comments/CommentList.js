@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { getCommentsByPostId } from "../modules/commentManager";
-import Post from "./Post";
+import { getCommentsByPostId } from "../../modules/commentManager";
+import Post from "../Post";
 
 // Display all comments related to the Post
 const CommentList = ({ post }) => {
@@ -19,9 +19,9 @@ const CommentList = ({ post }) => {
             <h2>{post.title}</h2>
             <div className="container">
                 <div className="row justify-content-center">
-                    {comments.map((comment) => (
+                    {/* {comments.map((comment) => (
                         <Comment comment={comment} key={comment.id} />
-                    ))}
+                    ))} */}
                 </div>
             </div>
         </>

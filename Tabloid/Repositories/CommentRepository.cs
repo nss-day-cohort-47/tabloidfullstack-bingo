@@ -88,16 +88,13 @@ namespace Tabloid.Repositories
                 {
                     cmd.CommandText = @"
                     UPDATE Comment
-                    SET PostId = @PostId,
-                        UserProfileId = @UserProfileId,
-                        Subject = @Subject,
+                    SET Subject = @Subject,
                         Content = @Content,
                         CreateDateTime = @CreateDateTime
                     WHERE Id = @Id
                     ";
 
-                    DbUtils.AddParameter(cmd, "@PostId", comment.PostId);
-                    DbUtils.AddParameter(cmd, "@UserProfileId", comment.UserProfileId);
+                    
                     DbUtils.AddParameter(cmd, "@Subject", comment.Subject);
                     DbUtils.AddParameter(cmd, "@Content", comment.Content);
                     DbUtils.AddParameter(cmd, "@CreateDateTime", comment.CreateDateTime);

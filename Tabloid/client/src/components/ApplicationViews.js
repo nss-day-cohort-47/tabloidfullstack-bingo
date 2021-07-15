@@ -8,7 +8,7 @@ import TagList from "./tag/TagList";
 import UserProfileList from "./UserProfileList";
 import CategoryList from "./CategoryList";
 import PostList from "./PostList";
-import CommentList from "./CommentList";
+import CommentList from "./comments/CommentList";
 import MyPosts from "./MyPosts";
 import TagForm from "./tag/TagForm";
 import CategoryForm from "./CategoryForm";
