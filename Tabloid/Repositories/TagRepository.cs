@@ -50,11 +50,10 @@ namespace Tabloid.Repositories
                     conn.Open();
                     using (var cmd = conn.CreateCommand())
                     {
-                        cmd.CommandText = @"INSERT INTO Tag (Id, Name)
+                        cmd.CommandText = @"INSERT INTO Tag (Name)
                                         OUTPUT INSERTED.ID
-                                        VALUES (@Id, @Name)";
-                        DbUtils.AddParameter(cmd, "@Id", tag.Id);
-                        DbUtils.AddParameter(cmd, "@FirstName", tag.Name);
+                                        VALUES (@Name)";
+                        DbUtils.AddParameter(cmd, "@Name", tag.Name);
 
                         tag.Id = (int)cmd.ExecuteScalar();
                     }
