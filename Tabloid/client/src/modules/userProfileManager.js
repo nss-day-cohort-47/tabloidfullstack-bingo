@@ -14,5 +14,5 @@ export const getAllUserProfiles = () => {
         }).then((res) => res.json()));
 };
 export const getUserProfile = (id) => {
-    return fetch(`${baseUrl}/${id}`).then((res) => res.json());
+    return fetch(`${baseUrl}/UserProfile/${id}`).then((res) => res.json());
 };
