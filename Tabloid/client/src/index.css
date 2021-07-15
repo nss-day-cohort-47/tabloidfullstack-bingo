@@ -16,3 +16,18 @@ p {
 .post p {
     white-space: pre-wrap;
 }
+.displayFlex {
+  display: flex;
+}
+
+.alignCenter {
+  align-items: center;
+}
+
+.border {
+  border: 2px solid red;
+}
+
+.justifyCenter {
+  justify-content: center;
+}
