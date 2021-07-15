@@ -12,26 +12,31 @@ import {
 import { logout } from '../modules/authManager';
 
 export default function Header({ isLoggedIn }) {
-  const [isOpen, setIsOpen] = useState(false);
+  const [ isOpen, setIsOpen ] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
 
   return (
     <div>
       <Navbar color="light" light expand="md">
-        <NavbarBrand tag={RRNavLink} to="/">Tabloid</NavbarBrand>
-        <NavbarToggler onClick={toggle} />
-        <Collapse isOpen={isOpen} navbar>
+        <NavbarBrand tag={ RRNavLink } to="/">Tabloid</NavbarBrand>
+        <NavbarToggler onClick={ toggle } />
+        <Collapse isOpen={ isOpen } navbar>
           <Nav className="mr-auto" navbar>
-            { /* When isLoggedIn === true, we will render the Home link */}
-            {isLoggedIn &&
-              <NavItem>
-                <NavLink tag={RRNavLink} to="/">Home</NavLink>
-              </NavItem>
+            { /* When isLoggedIn === true, we will render the Home link */ }
+            { isLoggedIn &&
+              <>
+                <NavItem>
+                  <NavLink tag={ RRNavLink } to="/">Home</NavLink>
+                </NavItem>
 
+                <NavItem>
+                  <NavLink tag={ RRNavLink } to="/myPosts">My Posts</NavLink>
+                </NavItem>
+              </>
             }
-            {isLoggedIn &&
+            { isLoggedIn &&
               <NavItem>
-                <NavLink tag={RRNavLink} to="/categories">Categories</NavLink>
+                <NavLink tag={ RRNavLink } to="/categories">Categories</NavLink>
               </NavItem>
 
             }
@@ -40,33 +45,33 @@ export default function Header({ isLoggedIn }) {
                 <NavLink tag={RRNavLink} to="/posts">Posts</NavLink>
               </NavItem>
             } */}
-            {isLoggedIn &&
+            { isLoggedIn &&
               <NavItem>
-                <NavLink tag={RRNavLink} to="/UserProfiles">User Profiles</NavLink>
+                <NavLink tag={ RRNavLink } to="/UserProfiles">User Profiles</NavLink>
               </NavItem>
             }
-            {isLoggedIn &&
+            { isLoggedIn &&
               <NavItem>
-                <NavLink tag={RRNavLink} to="/tag">Tags</NavLink>
+                <NavLink tag={ RRNavLink } to="/tag">Tags</NavLink>
               </NavItem>
             }
           </Nav>
           <Nav navbar>
-            {isLoggedIn &&
+            { isLoggedIn &&
               <>
                 <NavItem>
                   <a aria-current="page" className="nav-link"
-                    style={{ cursor: "pointer" }} onClick={logout}>Logout</a>
+                    style={ { cursor: "pointer" } } onClick={ logout }>Logout</a>
                 </NavItem>
               </>
             }
-            {!isLoggedIn &&
+            { !isLoggedIn &&
               <>
                 <NavItem>
-                  <NavLink tag={RRNavLink} to="/login">Login</NavLink>
+                  <NavLink tag={ RRNavLink } to="/login">Login</NavLink>
                 </NavItem>
                 <NavItem>
-                  <NavLink tag={RRNavLink} to="/register">Register</NavLink>
+                  <NavLink tag={ RRNavLink } to="/register">Register</NavLink>
                 </NavItem>
               </>
             }
