@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import UserProfile from './UserProfile';
-import { getAllUserProfiles } from "../../modules/userProfileManager";
+import { getAllUserProfilesDeactive } from "../../modules/userProfileManager";
 import { Link } from "react-router-dom";
 
 const UserProfileList = () => {
     const [userProfiles, setUserProfiles] = useState([]);
 
     const getUserProfiles = () => {
-        getAllUserProfiles().then(userProfiles => setUserProfiles(userProfiles));
+        getAllUserProfilesDeactive().then(userProfiles => setUserProfiles(userProfiles));
     };
 
     useEffect(() => {
@@ -17,7 +17,11 @@ const UserProfileList = () => {
 
     return (
         <div className="container">
-            <h2 className="row justify-content-center">Tabloid Users</h2>
+            <Link to={`/UserProfiles/`}>
+                <h3>Back</h3>
+            </Link>
+            <h2 className="row justify-content-center">Deactivated Users</h2>
+            <br />
             <div className="row justify-content-center">
                 {userProfiles.map((userProfile) => (
                     <UserProfile userProfile={userProfile} key={userProfile.id} />
@@ -25,11 +29,9 @@ const UserProfileList = () => {
             </div>
             <br />
             <br />
-            <div className="textAlign">
-                <Link to={`/UserProfiles/Deactivated`}>
-                    <h3>Show Deactivated</h3>
-                </Link>
-            </div>
+            <Link className="row justify-content-center" to={`/UserProfiles/`}>
+                <h3>Show Active Users</h3>
+            </Link>
         </div>
     );
 

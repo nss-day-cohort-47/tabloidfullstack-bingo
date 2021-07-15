@@ -23,6 +23,9 @@ p {
 .alignCenter {
   align-items: center;
 }
+.textAlign {
+  text-align: center;
+}
 
 .border {
   border: 2px solid red;
