@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import UserProfile from './UserProfile';
-import { getAllUserProfiles } from "../modules/userProfileManager";
+import { getAllUserProfiles } from "../../modules/userProfileManager";
 
 const UserProfileList = () => {
     const [userProfiles, setUserProfiles] = useState([]);
