@@ -24,7 +24,7 @@ const MyPosts = () => {
       <div className="container">
         <div className="row justify-content-center">
           { posts.map((post) => (
-            <Post post={ post } key={ post.id } />
+            <Post post={ post } key={ post.id } category={ post.category } />
           )) }
         </div>
       </div>
