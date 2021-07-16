@@ -8,8 +8,8 @@ import UserProfileList from "./userProfile/UserProfileList";
 import UserProfileDetails from "./userProfile/UserProfileDetails";
 import UserProfileDeactiveList from "./userProfile/UserProfileDeactiveList";
 
-import CategoryList from "./CategoryList";
-import PostList from "./PostList";
+import CategoryList from "./categories/CategoryList";
+import PostList from "./post/PostList";
 import MyPosts from "./post/MyPosts";
 import CommentList from "./comments/CommentList";
 import TagForm from "./tag/TagForm";
