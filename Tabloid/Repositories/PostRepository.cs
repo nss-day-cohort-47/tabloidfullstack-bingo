@@ -181,8 +181,8 @@ namespace Tabloid.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                                        DELETE FROM Post
-                                        WHERE @Id = id
+                                        DELETE FROM Post 
+                                        WHERE Id = @Id
                                         ";
                     DbUtils.AddParameter(cmd, "@Id", id);
                     cmd.ExecuteNonQuery();
