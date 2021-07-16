@@ -38,5 +38,25 @@ namespace Tabloid.Controllers
             _categoryRepo.DeleteCategory(id);
             return NoContent();
         }
+        [HttpPut("{id}")]
+        public IActionResult Edit(int id, Category category)
+        {
+            //if (id != category.Id)
+            //{
+            //    return BadRequest();
+            //}
+            _categoryRepo.EditCategory(category);
+            return NoContent();
+        }
+        [HttpGet("{id}")]
+        public IActionResult Get(int id)
+        {
+            var category = _categoryRepo.GetById(id);
+            if (category == null)
+            {
+                return NotFound();
+            }
+            return Ok(category);
+        }
     }
 }

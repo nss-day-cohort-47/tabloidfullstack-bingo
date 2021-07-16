@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import ReactDOM from 'react-dom';
-import firebase from "firebase/app";
-import { getAllUserPosts } from '../modules/postManager';
+import { getAllUserPosts } from '../../modules/postManager';
 import Post from "./Post";
 
 const MyPosts = () => {
@@ -24,7 +22,7 @@ const MyPosts = () => {
       <div className="container">
         <div className="row justify-content-center">
           { posts.map((post) => (
-            <Post post={ post } key={ post.id } />
+            <Post post={ post } key={ post.id } category={ post.category } />
           )) }
         </div>
       </div>

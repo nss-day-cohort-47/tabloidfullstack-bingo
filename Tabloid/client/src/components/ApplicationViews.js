@@ -7,13 +7,16 @@ import TagList from "./tag/TagList";
 import UserProfileList from "./userProfile/UserProfileList";
 import UserProfileDetails from "./userProfile/UserProfileDetails";
 import UserProfileDeactiveList from "./userProfile/UserProfileDeactiveList";
+
 import CategoryList from "./CategoryList";
 import PostList from "./PostList";
+import MyPosts from "./post/MyPosts";
 import CommentList from "./comments/CommentList";
-import MyPosts from "./MyPosts";
 import TagForm from "./tag/TagForm";
-import CategoryForm from "./CategoryForm";
+import CategoryForm from "./categories/CategoryForm";
+import EditCategory from "./categories/CategoryEdit";
 
+import PostDetails from "./post/PostDetails";
 
 export default function ApplicationViews({ isLoggedIn }) {
 
@@ -28,11 +31,19 @@ export default function ApplicationViews({ isLoggedIn }) {
         <Route path="/myPosts">
           <MyPosts />
         </Route>
+
+        <Route path="/post/:id" exact>
+          <PostDetails />
+        </Route>
+
         <Route path="/categories">
           {isLoggedIn ? <CategoryList /> : <Redirect to="/login" />}
         </Route>
         <Route path="/Category/create">
           {isLoggedIn ? <CategoryForm /> : <Redirect to="/login" />}
+        </Route>
+        <Route path="/Category/edit/:id">
+          {isLoggedIn ? <EditCategory /> : <Redirect to="/login" />}
         </Route>
         {/* <Route path="/posts">
           <PostList />
@@ -44,7 +55,7 @@ export default function ApplicationViews({ isLoggedIn }) {
           {isLoggedIn ? <UserProfileDeactiveList /> : <Redirect to="/login" />}
         </Route>
 
-        <Route path="/comments">
+        <Route path="/post/:id(\d+)/comments">
           {isLoggedIn ? <CommentList /> : <Redirect to="/login" />}
         </Route>
 

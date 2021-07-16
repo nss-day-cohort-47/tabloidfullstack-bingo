@@ -21,6 +21,7 @@ export const getAllPublishedPosts = () => {
   });
 };
 
+//Get all posts for current logged in user
 export const getAllUserPosts = () => {
   return getToken().then((token) => {
     return fetch(`${ baseUrl }/GetAllUserPosts`, {
@@ -33,6 +34,24 @@ export const getAllUserPosts = () => {
         return res.json();
       } else {
         throw new Error("Something happened while attempting to fetch your posts")
+      }
+    })
+  })
+};
+
+//Get post details by ID
+export const getPostById = (id) => {
+  return getToken().then((token) => {
+    return fetch(`${ baseUrl }/${ id }`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${ token }`
+      }
+    }).then(res => {
+      if (res.ok) {
+        return res.json();
+      } else {
+        throw new Error("Something went wrong :(")
       }
     })
   })

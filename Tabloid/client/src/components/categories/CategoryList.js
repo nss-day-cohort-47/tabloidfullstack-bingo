@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Category from "./Category";
-import { deleteCategory, getAllCategories } from "../modules/categoryManager";
+import { deleteCategory, getAllCategories, editCategory, getCategory } from "../../modules/categoryManager";
 import { useHistory } from "react-router";
 
 const CategoryList = () => {
@@ -13,6 +13,7 @@ const CategoryList = () => {
             .then(res => setCategories(res));
     }
 
+
     const handleDeleteCategory = (id) => {
         let yes = window.confirm("Are you sure you want to delete this Category?")
         if (yes === true) {
@@ -20,6 +21,8 @@ const CategoryList = () => {
                 .then(getAll())
         }
     }
+
+
 
     useEffect(() => {
         getAll();
@@ -37,7 +40,8 @@ const CategoryList = () => {
                 (<Category
                     category={category}
                     key={category.id}
-                    handleDeleteCategory={handleDeleteCategory} />
+                    handleDeleteCategory={handleDeleteCategory}
+                    history={history} />
                 ))}
             </div>
         </>
