@@ -162,8 +162,9 @@ namespace Tabloid.Repositories
                     DbUtils.AddParameter(cmd, "@imageLocation", post.ImageLocation);
                     DbUtils.AddParameter(cmd, "@createDateTime", post.CreateDateTime);
                     DbUtils.AddParameter(cmd, "@categoryId", post.CategoryId);
-                    DbUtils.AddParameter(cmd, "@userProfileId", 1);
-                    DbUtils.AddParameter(cmd, "@isApproved", 0);
+                    DbUtils.AddParameter(cmd, "@userProfileId", post.UserProfileId);
+                    DbUtils.AddParameter(cmd, "@isApproved", post.IsApproved);
+
 
                     post.Id = (int)cmd.ExecuteScalar();
                 }

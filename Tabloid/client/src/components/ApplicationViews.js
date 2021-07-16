@@ -13,6 +13,7 @@ import CommentList from "./comments/CommentList";
 import TagForm from "./tag/TagForm";
 import CategoryForm from "./CategoryForm";
 import PostDetails from "./post/PostDetails";
+import PostForm from "./post/PostForm";
 
 export default function ApplicationViews({ isLoggedIn }) {
 
@@ -26,6 +27,10 @@ export default function ApplicationViews({ isLoggedIn }) {
 
         <Route path="/myPosts">
           <MyPosts />
+        </Route>
+
+        <Route path='/NewPost' exact>
+          { isLoggedIn ? <PostForm /> : <Redirect to='/login' /> }
         </Route>
 
         <Route path="/post/:id">

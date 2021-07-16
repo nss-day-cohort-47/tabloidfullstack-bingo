@@ -10,6 +10,7 @@ const MyPosts = () => {
   const fetchUserPosts = () => {
     return getAllUserPosts().then(posts => setPosts(posts))
   }
+  console.log('posts', posts)
 
 
   useEffect(() => {
