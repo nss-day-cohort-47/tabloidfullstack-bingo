@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router";
 import { Form, FormGroup } from "reactstrap";
-import { editCategory } from "../modules/categoryManager";
+import { editCategory, getCategory } from "../../modules/categoryManager";
 
 const EditCategory = () => {
     const [category, setCategory] = useState({});
     const [isLoading, setIsLoading] = useState(false);
 
+    const { id } = useParams();
     const history = useHistory();
 
     const handleInputChange = (event) => {
+        event.preventDefault();
         const newCategory = { ...category }
 
         let selectedVal = event.target.value
@@ -18,27 +20,26 @@ const EditCategory = () => {
         setCategory(newCategory)
     }
 
-    const handleSave = (event) => {
+    const handleEditCategory = (event) => {
         event.preventDefault();
+        const editedCategory = {
+            id: id,
+            name: category.name
+        }
 
-        setIsLoading(true);
-        editCategory(category)
+        editCategory(editedCategory)
             .then(() => history.push("/categories"))
 
     }
 
-    // const handleEdit = (event) => {
-    //     event.preventDefault();
-    //     setIsLoading(true);
+    useEffect(() => {
+        getCategory(id)
+            .then(category => {
+                setCategory(category)
 
-    //     const editedCategory = {
-    //         id = categoryId,
-    //         name = category.name
-    //     }
-
-    //     EditCategory(editedCategory)
-    //         .then(() => history.push("/categories"))
-    // }    
+                setIsLoading(false)
+            })
+    }, [])
     return (
         <>
             <Form>
@@ -49,7 +50,7 @@ const EditCategory = () => {
                         onChange={handleInputChange} />
                 </FormGroup>
                 <button className="btn btn-primary"
-                    onClick={handleSave}
+                    onClick={handleEditCategory}
                     disabled={isLoading}>
                     Save
                 </button>

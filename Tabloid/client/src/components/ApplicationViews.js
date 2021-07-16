@@ -6,13 +6,13 @@ import TagList from "./tag/TagList";
 
 import UserProfileList from "./userProfile/UserProfileList";
 import UserProfileDetails from "./userProfile/UserProfileDetails";
-import CategoryList from "./CategoryList";
+import CategoryList from "./categories/CategoryList";
 import PostList from "./post/PostList";
 import MyPosts from "./post/MyPosts";
 import CommentList from "./comments/CommentList";
 import TagForm from "./tag/TagForm";
-import CategoryForm from "./CategoryForm";
-import EditCategory from "./CategoryEdit";
+import CategoryForm from "./categories/CategoryForm";
+import EditCategory from "./categories/CategoryEdit";
 
 import PostDetails from "./post/PostDetails";
 

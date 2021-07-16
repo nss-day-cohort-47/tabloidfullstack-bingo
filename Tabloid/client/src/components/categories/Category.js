@@ -1,7 +1,7 @@
 import React from "react";
 import { Card, CardBody } from "reactstrap";
 
-export const Category = ({ category, handleDeleteCategory, handleEditCategory }) => {
+export const Category = ({ category, handleDeleteCategory, history }) => {
     return (
         <>
             <Card>
@@ -10,7 +10,7 @@ export const Category = ({ category, handleDeleteCategory, handleEditCategory })
                     <p>{category.id}</p>
                 </div>
                 <button type="button" className="btn btn-primary" onClick={() => handleDeleteCategory(category.id)}>Delete</button>
-                <button type="button" className="btn btn-primary" onClick={() => handleEditCategory(category.id)}>Edit</button>
+                <button type="button" className="btn btn-primary" onClick={() => history.push(`/Category/edit/${category.id}`)}>Edit</button>
             </Card>
         </>
     );
