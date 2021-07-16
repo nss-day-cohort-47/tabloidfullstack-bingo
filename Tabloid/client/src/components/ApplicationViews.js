@@ -30,7 +30,7 @@ export default function ApplicationViews({ isLoggedIn }) {
           <MyPosts />
         </Route>
 
-        <Route path="/post/:id">
+        <Route path="/post/:id" exact>
           <PostDetails />
         </Route>
 
@@ -50,7 +50,7 @@ export default function ApplicationViews({ isLoggedIn }) {
           {isLoggedIn ? <UserProfileList /> : <Redirect to="/login" />}
         </Route>
 
-        <Route path="/comments">
+        <Route path="/post/:id(\d+)/comments">
           {isLoggedIn ? <CommentList /> : <Redirect to="/login" />}
         </Route>
 
