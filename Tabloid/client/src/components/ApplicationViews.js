@@ -10,6 +10,7 @@ import CategoryList from "./categories/CategoryList";
 import PostList from "./post/PostList";
 import MyPosts from "./post/MyPosts";
 import CommentList from "./comments/CommentList";
+import CommentForm from "./comments/CommentForm";
 import TagForm from "./tag/TagForm";
 import CategoryForm from "./categories/CategoryForm";
 import EditCategory from "./categories/CategoryEdit";
@@ -50,8 +51,12 @@ export default function ApplicationViews({ isLoggedIn }) {
           {isLoggedIn ? <UserProfileList /> : <Redirect to="/login" />}
         </Route>
 
-        <Route path="/post/:id(\d+)/comments">
+        <Route path="/post/:id(\d+)/comments" exact>
           {isLoggedIn ? <CommentList /> : <Redirect to="/login" />}
+        </Route>
+
+        <Route path="/post/:id(\d+)/comments/add">
+          {isLoggedIn ? <CommentForm /> : <Redirect to="/login" />}
         </Route>
 
         <Route path="/UserProfiles/:id">
