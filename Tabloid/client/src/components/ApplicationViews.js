@@ -30,7 +30,7 @@ export default function ApplicationViews({ isLoggedIn }) {
           <MyPosts />
         </Route>
 
-        <Route path="/post/:id">
+        <Route path="/post/:id" exact>
           <PostDetails />
         </Route>
 
