@@ -60,19 +60,66 @@ namespace Tabloid.Repositories
                 }
             }
 
-            /*
-            public Tag GetByFirebaseUserId(string firebaseUserId)
+        public void Delete(int id)
+        {
+            using (var conn = Connection)
             {
-                return _context.Tag
-                           .Include(up => up.UserType) 
-                           .FirstOrDefault(up => up.FirebaseUserId == firebaseUserId);
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"DELETE Tag WHERE Id=@Id";
+                    cmd.Parameters.AddWithValue("@Id", id);
+                    cmd.ExecuteNonQuery();
+                }
             }
-
-            public void Add(Tag tag)
-            {
-                _context.Add(tag);
-                _context.SaveChanges();
-            }
-            */
         }
+
+        public Tag GetById(int id)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"SELECT Id, Name
+                        
+                    FROM Tag
+                    Where Id = @Id";
+
+                    DbUtils.AddParameter(cmd, "@Id", id);
+
+                    var reader = cmd.ExecuteReader();
+
+                    Tag tag = null;
+                    if (reader.Read())
+                    {
+                        tag = new Tag()
+                        {
+                            Id = id,
+                            Name = DbUtils.GetString(reader, "Name"),
+                        };
+                    }
+
+                    reader.Close();
+
+                    return tag;
+                }
+            }
+        }
+
+        /*
+        public Tag GetByFirebaseUserId(string firebaseUserId)
+        {
+            return _context.Tag
+                       .Include(up => up.UserType) 
+                       .FirstOrDefault(up => up.FirebaseUserId == firebaseUserId);
+        }
+
+        public void Add(Tag tag)
+        {
+            _context.Add(tag);
+            _context.SaveChanges();
+        }
+        */
+    }
 }
