@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
-import UserProfile from './UserProfile';
+import UserProfileDeactivated from "./UserProfileDeactivated";
+import { useHistory } from "react-router";
 import { getAllUserProfilesDeactive } from "../../modules/userProfileManager";
 import { Link } from "react-router-dom";
 
 const UserProfileList = () => {
     const [userProfiles, setUserProfiles] = useState([]);
+
+
 
     const getUserProfiles = () => {
         getAllUserProfilesDeactive().then(userProfiles => setUserProfiles(userProfiles));
@@ -24,8 +27,9 @@ const UserProfileList = () => {
             <br />
             <div className="row justify-content-center">
                 {userProfiles.map((userProfile) => (
-                    <UserProfile userProfile={userProfile} key={userProfile.id} />
+                    <UserProfileDeactivated userProfile={userProfile} key={userProfile.id} />
                 ))}
+
             </div>
             <br />
             <br />
