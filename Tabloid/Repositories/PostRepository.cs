@@ -182,10 +182,22 @@ namespace Tabloid.Repositories
                 {
                     cmd.CommandText = @"
                                         DELETE FROM Post
-                                        WHERE Id = @Id
+                                        WHERE @Id = id
                                         ";
                     DbUtils.AddParameter(cmd, "@Id", id);
                     cmd.ExecuteNonQuery();
+                    //@"
+                    //                    DELETE FROM Post
+                    //                    WHERE Id in
+                    //                    (
+                    //                        SELECT p.Id
+                    //                        FROM Post p
+                    //                        INNER JOIN PostTag pt
+                    //                        ON p.Id = pt.PostId
+                    //                    )
+                    //                    DELETE FROM PostTag
+                    //                    WHERE p.Id = pt.PostId
+                    //                    ";
                 }
             }
         }
