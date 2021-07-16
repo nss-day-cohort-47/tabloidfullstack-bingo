@@ -55,6 +55,18 @@ namespace Tabloid.Controllers
             _userProfileRepository.Activate(id);
             return NoContent();
         }
+        [HttpPut("MakeAdmin/{id}")]
+        public IActionResult MakeAdmin(int id)
+        {
+            _userProfileRepository.MakeAdmin(id);
+            return NoContent();
+        }
+        [HttpPut("MakeAuthor/{id}")]
+        public IActionResult MakeAuthor(int id)
+        {
+            _userProfileRepository.MakeAuthor(id);
+            return NoContent();
+        }
 
         [HttpGet("DoesUserExist/{firebaseUserId}")]
         public IActionResult DoesUserExist(string firebaseUserId)
