@@ -20,7 +20,7 @@ namespace Tabloid.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                    SELECT Id, Name, IsDeleted
+                    SELECT Id, Name
                         
                     FROM Tag";
 
@@ -67,10 +67,42 @@ namespace Tabloid.Repositories
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"UPDATE Comment SET isDeleted=@IsDeleted WHERE Id=@Id";
-                    cmd.Parameters.AddWithValue("@IsDeleted", 1);
+                    cmd.CommandText = @"DELETE Tag WHERE Id=@Id";
                     cmd.Parameters.AddWithValue("@Id", id);
                     cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public Tag GetById(int id)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"SELECT Id, Name
+                        
+                    FROM Tag
+                    Where Id = @Id";
+
+                    DbUtils.AddParameter(cmd, "@Id", id);
+
+                    var reader = cmd.ExecuteReader();
+
+                    Tag tag = null;
+                    if (reader.Read())
+                    {
+                        tag = new Tag()
+                        {
+                            Id = id,
+                            Name = DbUtils.GetString(reader, "Name"),
+                        };
+                    }
+
+                    reader.Close();
+
+                    return tag;
                 }
             }
         }

@@ -21,7 +21,7 @@ const TagList = () => {
       <Link to='tag/add'>Add a Tag</Link>
       <div className="container">
         <div className="row justify-content-center">
-          {tags.filter(tag => tag.isDeleted === false).map((tag) => (
+          {tags.map((tag) => (
             <Tag tag={tag} key={tag.id} />
           ))}
         </div>

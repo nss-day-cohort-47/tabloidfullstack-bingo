@@ -25,20 +25,26 @@ export const addTag = (tag) => {
     })).then(resp => resp.json())
 };
 
-export const deleteTag = (tag, id) => {
+export const deleteTag = (id) => {
   return getToken().then((token) =>
     fetch(`${baseUrl}/delete/${id}`, {
-      method: "PUT",
+      method: "DELETE",
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(tag),
-    })).then(resp => resp.json())
+      body: JSON.stringify(id),
+    }))
 };
 
 export const getToken = () => firebase.auth().currentUser.getIdToken();
 
 export const getTagById = (id) => {
-  return fetch(`${baseUrl}/${id}`).then((res) => res.json());
+  return getToken().then((token) =>
+    fetch(`${baseUrl}/${id}`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }).then((res) => res.json()));
 };

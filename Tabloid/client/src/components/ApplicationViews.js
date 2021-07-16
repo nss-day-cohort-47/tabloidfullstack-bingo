@@ -13,6 +13,7 @@ import CommentList from "./comments/CommentList";
 import TagForm from "./tag/TagForm";
 import CategoryForm from "./CategoryForm";
 import PostDetails from "./post/PostDetails";
+import TagDelete from "./tag/TagDelete";
 
 export default function ApplicationViews({ isLoggedIn }) {
 
@@ -21,7 +22,7 @@ export default function ApplicationViews({ isLoggedIn }) {
     <main>
       <Switch>
         <Route path="/" exact>
-          { isLoggedIn ? <PostList /> : <Redirect to="/login" /> }
+          {isLoggedIn ? <PostList /> : <Redirect to="/login" />}
         </Route>
 
         <Route path="/myPosts">
@@ -33,24 +34,24 @@ export default function ApplicationViews({ isLoggedIn }) {
         </Route>
 
         <Route path="/categories">
-          { isLoggedIn ? <CategoryList /> : <Redirect to="/login" /> }
+          {isLoggedIn ? <CategoryList /> : <Redirect to="/login" />}
         </Route>
         <Route path="/Category/create">
-          { isLoggedIn ? <CategoryForm /> : <Redirect to="/login" /> }
+          {isLoggedIn ? <CategoryForm /> : <Redirect to="/login" />}
         </Route>
         {/* <Route path="/posts">
           <PostList />
         </Route> */}
         <Route path="/UserProfiles" exact>
-          { isLoggedIn ? <UserProfileList /> : <Redirect to="/login" /> }
+          {isLoggedIn ? <UserProfileList /> : <Redirect to="/login" />}
         </Route>
 
         <Route path="/comments">
-          { isLoggedIn ? <CommentList /> : <Redirect to="/login" /> }
+          {isLoggedIn ? <CommentList /> : <Redirect to="/login" />}
         </Route>
 
         <Route path="/UserProfiles/:id">
-          { isLoggedIn ? <UserProfileDetails /> : <Redirect to="/login" /> }
+          {isLoggedIn ? <UserProfileDetails /> : <Redirect to="/login" />}
         </Route>
 
         <Route path="/login">
@@ -67,6 +68,10 @@ export default function ApplicationViews({ isLoggedIn }) {
 
         <Route path="/tag/add" exact>
           <TagForm />
+        </Route>
+
+        <Route path="/tag/delete/:id" exact>
+          <TagDelete />
         </Route>
 
       </Switch>
