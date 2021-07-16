@@ -17,6 +17,7 @@ import CategoryForm from "./categories/CategoryForm";
 import EditCategory from "./categories/CategoryEdit";
 
 import PostDetails from "./post/PostDetails";
+import TagDelete from "./tag/TagDelete";
 
 export default function ApplicationViews({ isLoggedIn }) {
 
@@ -79,8 +80,12 @@ export default function ApplicationViews({ isLoggedIn }) {
           <TagForm />
         </Route>
 
+        <Route path="/tag/delete/:id" exact>
+          <TagDelete />
+        </Route>
+
       </Switch>
-    </main>
+    </main >
 
   );
 };
