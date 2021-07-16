@@ -34,63 +34,30 @@ const PostForm = () => {
 
   //Handle input changes and parse user ID
   const handleDropdownChange = (e) => {
-    let catSelect = { ...categorySelect };
-    let selectedVal = e.target.value
+    e.preventDefault()
 
-    if (e.target.id.includes('Id')) {
-      selectedVal = parseInt(selectedVal)
-    }
-
-    catSelect[ e.target.id ] = selectedVal
-    console.log('selectedVal', selectedVal)
+    let selectedVal = e.target.value;
     setCategorySelect(selectedVal);
   };
 
   //Takes new post entry and sends it to the DB
-  const handleClickSaveEntry = e => {
+  const handleClickSaveEntry = (e) => {
     e.preventDefault();
     setIsLoading(true);
     let newPost = { ...post };
 
     newPost.categoryId = categorySelect;
-
-
-    addPost(newPost).then(() => history.push('/'))
+    addPost(newPost).then(() => history.push('/MyPosts'))
   }
 
   return (
     <>
-
-      {/* <div class="dropdown">
-      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        Dropdown button
-      </button>
-      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        { categoryList.map(c => (
-          <button
-            className="dropdown-item"
-            type="button"
-            eventKey={ c.Id }
-            key={ c.Id * Math.random() }
-            onClick={ () => setCategorySelect(`${ c.name }`) }
-          >{ c.name }</button>)) }
-
-
-      </div>
-    </div> */}
       <fieldset>
         <div className='post-form'>
           <div className='category-dropdown'>
-            {/* <select
-              defaultValue={ post.category }
-              name='category'
-              id='category'
-              onChange={ handleControlledInputChange }
-              className='form-control'
-              title='Select A Category'
-            >{ categorySelect }</select> */}
+
             <label htmlFor="categories" >Choose a Category</label>
-            <select name="categories" onChange={ handleDropdownChange }>
+            <select value={ categorySelect } name="categories" onChange={ handleDropdownChange }>
               { categoryList.map(c => (
                 <option
                   htmlFor={ c.name }

@@ -67,7 +67,7 @@ namespace Tabloid.Repositories
                     cmd.CommandText = @"
                        SELECT p.Id, p.Title, p.Content, 
                               p.ImageLocation AS HeaderImage,
-                              p.CreateDateTime, p.PublishDateTime, p.IsApproved, 
+                              p.CreateDateTime AS PostCreateDate, p.PublishDateTime, p.IsApproved, 
                               p.CategoryId, p.UserProfileId,
                               c.[Name] AS CategoryName,
                               u.FirstName, u.LastName, u.DisplayName, 
@@ -78,8 +78,8 @@ namespace Tabloid.Repositories
                               LEFT JOIN Category c ON p.CategoryId = c.id
                               LEFT JOIN UserProfile u ON p.UserProfileId = u.id
                               LEFT JOIN UserType ut ON u.UserTypeId = ut.id
-                        WHERE PublishDateTime < SYSDATETIME() AND u.FirebaseUserId = @FirebaseUserId
-                        ORDER BY PublishDateTime DESC";
+                        WHERE u.FirebaseUserId = @FirebaseUserId
+                        ORDER BY PostCreateDate DESC";
                     DbUtils.AddParameter(cmd, "@FirebaseUserId", FirebaseUserId);
                     var reader = cmd.ExecuteReader();
 
@@ -118,7 +118,7 @@ namespace Tabloid.Repositories
                               LEFT JOIN Category c ON p.CategoryId = c.id
                               LEFT JOIN UserProfile u ON p.UserProfileId = u.id
                               LEFT JOIN UserType ut ON u.UserTypeId = ut.id
-                        WHERE PublishDateTime < SYSDATETIME() AND p.id = @id
+                        WHERE p.id = @id
                         ORDER BY PublishDateTime DESC";
                     DbUtils.AddParameter(cmd, "@id", id);
                     var reader = cmd.ExecuteReader();
@@ -164,6 +164,7 @@ namespace Tabloid.Repositories
                     DbUtils.AddParameter(cmd, "@categoryId", post.CategoryId);
                     DbUtils.AddParameter(cmd, "@userProfileId", post.UserProfileId);
                     DbUtils.AddParameter(cmd, "@isApproved", post.IsApproved);
+                    //DbUtils.AddParameter(cmd, "@publishDateTime", post.PublishDateTime);
 
 
                     post.Id = (int)cmd.ExecuteScalar();
