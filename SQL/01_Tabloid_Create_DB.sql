@@ -26,20 +26,34 @@ CREATE TABLE [UserType] (
   [Name] nvarchar(20) NOT NULL
 )
 
-CREATE TABLE [UserProfile] (
-  [Id] integer PRIMARY KEY IDENTITY,
-  [FirebaseUserId] NVARCHAR(28) NOT NULL,
-  [DisplayName] nvarchar(50) NOT NULL,
-  [FirstName] nvarchar(50) NOT NULL,
-  [LastName] nvarchar(50) NOT NULL,
-  [Email] nvarchar(555) NOT NULL,
-  [CreateDateTime] datetime NOT NULL,
-  [ImageLocation] nvarchar(255),
-  [UserTypeId] integer NOT NULL,
+CREATE TABLE [dbo].[UserProfile] (
+  [Id]                INT            IDENTITY (1, 1) NOT NULL,
+  [FirebaseUserId]    NVARCHAR(28) NOT NULL,
+  [DisplayName]       nvarchar(50) NOT NULL,
+  [FirstName]         nvarchar(50) NOT NULL,
+  [LastName]          nvarchar(50) NOT NULL,
+  [Email]             nvarchar(555) NOT NULL,
+  [CreateDateTime]    datetime NOT NULL,
+  [ImageLocation]     nvarchar(255),
+  [UserTypeId]        integer NOT NULL,
+  [isDeactivated]     BIT NOT NULL DEFAULT 0, 
 
   CONSTRAINT [FK_User_UserType] FOREIGN KEY ([UserTypeId]) REFERENCES [UserType] ([Id]),
   CONSTRAINT UQ_FirebaseUserId UNIQUE(FirebaseUserId)
-)
+);
+
+CREATE TABLE [dbo].[Comment] (
+    [Id]             INT            IDENTITY (1, 1) NOT NULL,
+    [PostId]         INT            NOT NULL,
+    [UserProfileId]  INT            NOT NULL,
+    [Subject]        NVARCHAR (255) NOT NULL,
+    [Content]        TEXT           NOT NULL,
+    [CreateDateTime] DATETIME       NOT NULL,
+    [isDeleted] BIT NOT NULL DEFAULT 0, 
+    PRIMARY KEY CLUSTERED ([Id] ASC),
+    CONSTRAINT [FK_Comment_Post] FOREIGN KEY ([PostId]) REFERENCES [dbo].[Post] ([Id]),
+    CONSTRAINT [FK_Comment_UserProfile] FOREIGN KEY ([UserProfileId]) REFERENCES [dbo].[UserProfile] ([Id])
+);
 
 CREATE TABLE [Subscription] (
   [Id] integer PRIMARY KEY IDENTITY,
@@ -82,6 +96,7 @@ CREATE TABLE [Comment] (
   [Subject] nvarchar(255) NOT NULL,
   [Content] text NOT NULL,
   [CreateDateTime] datetime NOT NULL,
+  [isDeleted] BIT NOT NULL DEFAULT 0, 
 
   CONSTRAINT [FK_Comment_Post] FOREIGN KEY ([PostId]) REFERENCES [Post] ([Id]),
   CONSTRAINT [FK_Comment_UserProfile] FOREIGN KEY ([UserProfileId]) REFERENCES [UserProfile] ([Id])

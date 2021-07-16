@@ -6,6 +6,8 @@ import TagList from "./tag/TagList";
 
 import UserProfileList from "./userProfile/UserProfileList";
 import UserProfileDetails from "./userProfile/UserProfileDetails";
+import UserProfileDeactiveList from "./userProfile/UserProfileDeactiveList";
+
 import CategoryList from "./categories/CategoryList";
 import PostList from "./post/PostList";
 import MyPosts from "./post/MyPosts";
@@ -48,6 +50,9 @@ export default function ApplicationViews({ isLoggedIn }) {
         </Route> */}
         <Route path="/UserProfiles" exact>
           {isLoggedIn ? <UserProfileList /> : <Redirect to="/login" />}
+        </Route>
+        <Route path="/UserProfiles/Deactivated" exact>
+          {isLoggedIn ? <UserProfileDeactiveList /> : <Redirect to="/login" />}
         </Route>
 
         <Route path="/post/:id(\d+)/comments">

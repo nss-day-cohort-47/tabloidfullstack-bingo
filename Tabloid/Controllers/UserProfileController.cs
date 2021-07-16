@@ -21,6 +21,12 @@ namespace Tabloid.Controllers
             return Ok(_userProfileRepository.GetAll());
         }
 
+        [HttpGet("Deactivated")]
+        public IActionResult GetDeactivated()
+        {
+            return Ok(_userProfileRepository.GetAllDeactivated());
+        }
+
         [HttpGet("{firebaseUserId}")]
         public IActionResult GetUserProfile(string firebaseUserId)
         {
@@ -36,6 +42,18 @@ namespace Tabloid.Controllers
                 return NotFound();
             }
             return Ok(userProfile);
+        }
+        [HttpDelete("{id}")]
+        public IActionResult Deactivate(int id)
+        {
+            _userProfileRepository.Deactivate(id);
+            return NoContent();
+        }
+        [HttpPut("{id}")]
+        public IActionResult Activate(int id)
+        {
+            _userProfileRepository.Activate(id);
+            return NoContent();
         }
 
         [HttpGet("DoesUserExist/{firebaseUserId}")]
