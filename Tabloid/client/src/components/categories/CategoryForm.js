@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router";
 import { Form, FormGroup } from "reactstrap";
-import { addCategory } from "../modules/categoryManager";
+import { addCategory } from "../../modules/categoryManager";
 
 const CategoryForm = () => {
     const [isLoading, setIsLoading] = useState(false)

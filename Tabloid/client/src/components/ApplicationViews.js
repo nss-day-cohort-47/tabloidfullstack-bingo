@@ -6,12 +6,14 @@ import TagList from "./tag/TagList";
 
 import UserProfileList from "./userProfile/UserProfileList";
 import UserProfileDetails from "./userProfile/UserProfileDetails";
-import CategoryList from "./CategoryList";
+import CategoryList from "./categories/CategoryList";
 import PostList from "./post/PostList";
 import MyPosts from "./post/MyPosts";
 import CommentList from "./comments/CommentList";
 import TagForm from "./tag/TagForm";
-import CategoryForm from "./CategoryForm";
+import CategoryForm from "./categories/CategoryForm";
+import EditCategory from "./categories/CategoryEdit";
+
 import PostDetails from "./post/PostDetails";
 
 export default function ApplicationViews({ isLoggedIn }) {
@@ -37,6 +39,9 @@ export default function ApplicationViews({ isLoggedIn }) {
         </Route>
         <Route path="/Category/create">
           {isLoggedIn ? <CategoryForm /> : <Redirect to="/login" />}
+        </Route>
+        <Route path="/Category/edit/:id">
+          {isLoggedIn ? <EditCategory /> : <Redirect to="/login" />}
         </Route>
         {/* <Route path="/posts">
           <PostList />
