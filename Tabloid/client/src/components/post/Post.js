@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { dateFixer } from "../../modules/helpers";
 
 //render a single post
-const Post = ({ post, category }) => {
+const Post = ({ post, category, handleDeletePost }) => {
 
   const publishDate = dateFixer(post)
 
@@ -26,6 +26,7 @@ const Post = ({ post, category }) => {
           <strong>Edit</strong>
         </Link>
         <p>Publish Date: { publishDate }</p>
+        <button type="button" className="btn btn-primary" onClick={ () => handleDeletePost(post.id) }>Delete</button>
       </CardBody>
     </Card>
   );

@@ -9,7 +9,7 @@ export const getAllPublishedPosts = () => {
     return fetch(baseUrl, {
       method: "GET",
       headers: {
-        Authorization: `Bearer ${ token }`
+        Authorization: `Bearer ${token}`
       }
     }).then(res => {
       if (res.ok) {
@@ -24,10 +24,10 @@ export const getAllPublishedPosts = () => {
 //Get all posts for current logged in user
 export const getAllUserPosts = () => {
   return getToken().then((token) => {
-    return fetch(`${ baseUrl }/GetAllUserPosts`, {
+    return fetch(`${baseUrl}/GetAllUserPosts`, {
       method: "GET",
       headers: {
-        Authorization: `Bearer ${ token }`
+        Authorization: `Bearer ${token}`
       }
     }).then(res => {
       if (res.ok) {
@@ -42,16 +42,29 @@ export const getAllUserPosts = () => {
 //Get post details by ID
 export const getPostById = (id) => {
   return getToken().then((token) => {
-    return fetch(`${ baseUrl }/${ id }`, {
+    return fetch(`${baseUrl}/${id}`, {
       method: "GET",
       headers: {
-        Authorization: `Bearer ${ token }`
+        Authorization: `Bearer ${token}`
       }
     }).then(res => {
       if (res.ok) {
         return res.json();
       } else {
         throw new Error("Something went wrong :(")
+      }
+    })
+  })
+};
+
+//Deletes a post
+export const deletePost = (id) => {
+  return getToken().then((token) => {
+    fetch(`${baseUrl}/${id}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json"
       }
     })
   })
@@ -63,7 +76,7 @@ export const addPost = (post) => {
     return fetch(baseUrl, {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${ token }`,
+        Authorization: `Bearer ${token}`,
         "Content-Type": "application/json"
       },
       body: JSON.stringify(post)
