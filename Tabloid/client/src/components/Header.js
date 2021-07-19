@@ -52,7 +52,7 @@ export default function Header({ isLoggedIn }) {
                 </NavItem>
 
                 <NavItem>
-                  <NavLink tag={ RRNavLink } to="/NewPost">New Post</NavLink>
+                  <NavLink tag={RRNavLink} to="/NewPost">New Post</NavLink>
                 </NavItem>
               </>
             }
@@ -69,7 +69,7 @@ export default function Header({ isLoggedIn }) {
             } */}
             {isLoggedIn &&
               //! TRY AND GET WORKING
-              //isAdmin &&
+              isAdmin &&
               < NavItem >
                 <NavLink tag={RRNavLink} to="/UserProfiles">User Profiles</NavLink>
               </NavItem>

@@ -80,7 +80,15 @@ export const getUserProfile = (id) => {
 };
 
 
-//? 
-export const getCurrentUserType = (id) => {
-    return fetch(`${baseUrl}/UserProfile/GetCurrentUserType`).then((res) => res.json());
+
+
+export const getCurrentUserType = () => {
+    return getToken().then((token) =>
+        fetch(`${baseUrl}/GetCurrentUserType`, {
+            method: "GET",
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }).then((res) => res.json())
+    )
 };
