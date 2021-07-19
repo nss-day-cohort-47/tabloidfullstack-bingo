@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router";
 import { useParams } from "react-router-dom";
 import { Card, CardBody } from "reactstrap";
 import { Link } from "react-router-dom";
 import { getUserProfile } from "../../modules/userProfileManager";
+import { DeactivateUser } from "../../modules/userProfileManager";
 
 const UserProfileDetails = () => {
     const [userProfile, setUserProfile] = useState();
     const { id } = useParams();
+
+    const history = useHistory()
 
     useEffect(() => {
         getUserProfile(id).then(userProfile => setUserProfile(userProfile));
@@ -15,6 +19,19 @@ const UserProfileDetails = () => {
     if (!userProfile) {
         return null;
     };
+
+    const handleDeactivate = (event) => {
+        //debugger
+        if (window.confirm("Are you sure you want to deactivate this account?")) {
+            event.preventDefault()
+            DeactivateUser(userProfile.id)
+                .then(() => history.push("/UserProfiles/Deactivated")
+                )
+        } else {
+            history.push("/UserProfiles/")
+        }
+
+    }
 
     //* console.log("USER ID: ",id);
     //* console.log("USERPROFILE OBJ: ", userProfile);
@@ -29,7 +46,7 @@ const UserProfileDetails = () => {
     const month = (dateSplit[1])
     const hour = (timeSplit[0])
     const minute = (timeSplit[1])
-    const midnightCheck = (hour == "00" ? "12" : hour)
+    const midnightCheck = (hour === "00" ? "12" : hour)
     const nightNoon = (hour > 12 ? " PM" : " AM")
     const TimeStamp = (day + "/" + month + "/" + year + " @ " + midnightCheck + ":" + minute + "" + nightNoon);
 
@@ -40,7 +57,7 @@ const UserProfileDetails = () => {
                 <h3>Back To User Profiles</h3>
             </Link>
             <Card className="alignCenter border alignCenter justifyCenter">
-                <img id="profilePhoto" src={`${userProfile.imageLocation ? userProfile.imageLocation : defaultProfileImage}`} alt="default profile picture" />
+                <img id="profilePhoto" src={`${userProfile.imageLocation ? userProfile.imageLocation : defaultProfileImage}`} alt="default profile" />
                 <h3><strong>{userProfile.displayName}</strong>, <em>{userProfile.userType.name}</em></h3>
                 <h5><strong>Profile Created On: </strong>{TimeStamp}</h5>
 
@@ -51,8 +68,13 @@ const UserProfileDetails = () => {
                         <p><strong>Email: </strong>{userProfile.email}</p>
                     </div>
 
-
                 </CardBody>
+
+                {/* ! NEEDS WORK */}
+                <button type="button" className="btn btn-primary"
+                    onClick={handleDeactivate}>
+                    Deactivate User
+                </button>
             </Card >
         </>
     );

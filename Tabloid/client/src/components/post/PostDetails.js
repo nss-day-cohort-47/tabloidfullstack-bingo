@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { getPostById } from "../../modules/postManager";
 import { Card, CardBody } from "reactstrap";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { dateFixer } from "../../modules/helpers";
 
 //Display all published posts
 const PostDetails = () => {
-  const [ post, setPost ] = useState([]);
+  const [post, setPost] = useState([]);
   const { id } = useParams();
 
   const fetchPosts = () => {
@@ -23,18 +23,21 @@ const PostDetails = () => {
     <>
       <Card>
         <CardBody>
-          <img src={ post.imageLocation } alt={ `Image for ${ post.title }` } />
-          <h1>{ post.title }</h1>
-          <h3>Author: { post.userProfile?.displayName }</h3>
+          <img src={post.imageLocation} alt={`Image for ${post.title}`} />
+          <h1>{post.title}</h1>
+          <h3>Author: {post.userProfile?.displayName}</h3>
           <br />
-          <h4>{ post.content }</h4>
+          <h4>{post.content}</h4>
 
           {/* { console.log('categories', category) }
         { category.map((cat) => (
           <p>{ cat.name }</p>
         )) } */}
-          <p>Category: { post.category?.name }</p>
-          <p>Publish Date: { publishDate }</p>
+          <p>Category: {post.category?.name}</p>
+          <p>Publish Date: {publishDate}</p>
+          <Link to={`/post/${post.id}/comments`}>
+            <button className="btn btn-primary">View Comments</button>
+          </Link>
         </CardBody>
       </Card>
     </>
