@@ -68,22 +68,29 @@ namespace Tabloid.Controllers
         [HttpPut("{id}")]
         public IActionResult Put(int id, Post post)
         {
+            var currentUser = GetCurrentUserProfile();
             if (id != post.Id)
             {
                 return BadRequest();
+            } else if(post.UserProfileId == currentUser.Id)
+            {
+                _postRepository.Update(post);
+                return NoContent();
+            } else
+            {
+                return Unauthorized();
+         
             }
 
-            _postRepository.Update(post);
-            return NoContent();
         }
 
         private UserProfile GetCurrentUserProfile()
         {
             var firebaseUserId = User?.FindFirst(ClaimTypes.NameIdentifier).Value;
 
-            if(firebaseUserId != null)
+            if (firebaseUserId != null)
             {
-            return _userProfileRepository.GetByFirebaseUserId(firebaseUserId);
+                return _userProfileRepository.GetByFirebaseUserId(firebaseUserId);
             }
             else
             {
