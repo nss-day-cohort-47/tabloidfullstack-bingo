@@ -77,5 +77,12 @@ namespace Tabloid.Controllers
                 return null;
             }
         }
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            _postRepository.DeletePost(id);
+            return NoContent();
+        }
     };
 }
