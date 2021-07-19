@@ -64,6 +64,19 @@ namespace Tabloid.Controllers
             return CreatedAtAction(nameof(GetAllUserPosts), new { id = post.Id }, post);
         }
 
+        // Update post
+        [HttpPut("{id}")]
+        public IActionResult Put(int id, Post post)
+        {
+            if (id != post.Id)
+            {
+                return BadRequest();
+            }
+
+            _postRepository.Update(post);
+            return NoContent();
+        }
+
         private UserProfile GetCurrentUserProfile()
         {
             var firebaseUserId = User?.FindFirst(ClaimTypes.NameIdentifier).Value;

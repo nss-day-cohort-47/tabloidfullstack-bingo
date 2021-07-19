@@ -59,7 +59,6 @@ export const getPostById = (id) => {
 
 //add new post to DB
 export const addPost = (post) => {
-  console.log('post obj', post)
   return getToken().then((token) => {
     return fetch(baseUrl, {
       method: "POST",
@@ -71,3 +70,17 @@ export const addPost = (post) => {
     })
   });
 };
+
+//Edit post
+export const editPost = (post) => {
+  return getToken().then((token) => {
+    return fetch(`${ baseUrl }/${ post.id }`, {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${ token }`,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(post)
+    })
+  })
+}

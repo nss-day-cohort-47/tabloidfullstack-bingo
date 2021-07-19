@@ -21,6 +21,10 @@ const Post = ({ post, category }) => {
         <Link to={ `/post/${ post.id }` }>
           <strong>Details</strong>
         </Link>
+        <br />
+        <Link to={ `/post/edit/${ post.id }` }>
+          <strong>Edit</strong>
+        </Link>
         <p>Publish Date: { publishDate }</p>
       </CardBody>
     </Card>
