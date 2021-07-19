@@ -18,6 +18,7 @@ namespace Tabloid.Models
         public int UserProfileId { get; set; }
         public UserProfile UserProfile { get; set; }
         public Category Category { get; internal set; }
+        public bool CanEdit { get; set; }
         //TODO: Add Category object
     }
 }
