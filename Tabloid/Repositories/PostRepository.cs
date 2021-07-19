@@ -216,9 +216,12 @@ namespace Tabloid.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                                        DELETE p 
-                                        FROM Post
-                                        INNER JOIN Comment c on c.PostId = p.Id
+                                        DELETE c
+                                        FROM Comment c
+                                        WHERE c.PostId = @Id;
+                                        
+                                        DELETE p
+                                        FROM Post p
                                         WHERE p.Id = @Id
                                         ";
                     DbUtils.AddParameter(cmd, "@Id", id);

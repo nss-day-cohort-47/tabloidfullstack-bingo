@@ -1,14 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router';
 import { getAllUserPosts, deletePost } from '../../modules/postManager';
 import Post from "./Post";
 
 const MyPosts = () => {
 
   const [posts, setPosts] = useState([]);
-
-  const history = useHistory();
-
 
   const fetchUserPosts = () => {
     return getAllUserPosts().then(posts => setPosts(posts))
@@ -19,7 +15,7 @@ const MyPosts = () => {
     let yes = window.confirm("Are you sure you want to delete this post?")
     if (yes === true) {
       deletePost(id)
-        .then(() => history.push("/myPosts"))
+        .then(getAllUserPosts())
     }
   }
 
