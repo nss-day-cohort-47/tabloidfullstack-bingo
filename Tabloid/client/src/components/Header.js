@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavLink as RRNavLink } from "react-router-dom";
 import {
   Collapse,
@@ -10,27 +10,45 @@ import {
   NavLink
 } from 'reactstrap';
 import { logout } from '../modules/authManager';
+import { getCurrentUserType } from '../modules/userProfileManager';
 
 export default function Header({ isLoggedIn }) {
-  const [ isOpen, setIsOpen ] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(true);
   const toggle = () => setIsOpen(!isOpen);
+
+  const userIsAdmin = () => {
+    getCurrentUserType().then((userType) => {
+      if (userType.name == "Admin") {
+        setIsAdmin(true);
+      } else {
+        setIsAdmin(false)
+      }
+    });
+  };
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      userIsAdmin();
+    }
+  }, [isLoggedIn]);
 
   return (
     <div>
       <Navbar color="light" light expand="md">
-        <NavbarBrand tag={ RRNavLink } to="/">Tabloid</NavbarBrand>
-        <NavbarToggler onClick={ toggle } />
-        <Collapse isOpen={ isOpen } navbar>
+        <NavbarBrand tag={RRNavLink} to="/">Tabloid</NavbarBrand>
+        <NavbarToggler onClick={toggle} />
+        <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>
-            { /* When isLoggedIn === true, we will render the Home link */ }
-            { isLoggedIn &&
+            { /* When isLoggedIn === true, we will render the Home link */}
+            {isLoggedIn &&
               <>
                 <NavItem>
-                  <NavLink tag={ RRNavLink } to="/">Home</NavLink>
+                  <NavLink tag={RRNavLink} to="/">Home</NavLink>
                 </NavItem>
 
                 <NavItem>
-                  <NavLink tag={ RRNavLink } to="/myPosts">My Posts</NavLink>
+                  <NavLink tag={RRNavLink} to="/myPosts">My Posts</NavLink>
                 </NavItem>
 
                 <NavItem>
@@ -38,9 +56,9 @@ export default function Header({ isLoggedIn }) {
                 </NavItem>
               </>
             }
-            { isLoggedIn &&
+            {isLoggedIn &&
               <NavItem>
-                <NavLink tag={ RRNavLink } to="/categories">Categories</NavLink>
+                <NavLink tag={RRNavLink} to="/categories">Categories</NavLink>
               </NavItem>
 
             }
@@ -49,39 +67,41 @@ export default function Header({ isLoggedIn }) {
                 <NavLink tag={RRNavLink} to="/posts">Posts</NavLink>
               </NavItem>
             } */}
-            { isLoggedIn &&
-              <NavItem>
-                <NavLink tag={ RRNavLink } to="/UserProfiles">User Profiles</NavLink>
+            {isLoggedIn &&
+              //! TRY AND GET WORKING
+              //isAdmin &&
+              < NavItem >
+                <NavLink tag={RRNavLink} to="/UserProfiles">User Profiles</NavLink>
               </NavItem>
             }
-            { isLoggedIn &&
+            {isLoggedIn &&
               <NavItem>
-                <NavLink tag={ RRNavLink } to="/tag">Tags</NavLink>
+                <NavLink tag={RRNavLink} to="/tag">Tags</NavLink>
               </NavItem>
             }
           </Nav>
           <Nav navbar>
-            { isLoggedIn &&
+            {isLoggedIn &&
               <>
                 <NavItem>
                   <a aria-current="page" className="nav-link"
-                    style={ { cursor: "pointer" } } onClick={ logout }>Logout</a>
+                    style={{ cursor: "pointer" }} onClick={logout}>Logout</a>
                 </NavItem>
               </>
             }
-            { !isLoggedIn &&
+            {!isLoggedIn &&
               <>
                 <NavItem>
-                  <NavLink tag={ RRNavLink } to="/login">Login</NavLink>
+                  <NavLink tag={RRNavLink} to="/login">Login</NavLink>
                 </NavItem>
                 <NavItem>
-                  <NavLink tag={ RRNavLink } to="/register">Register</NavLink>
+                  <NavLink tag={RRNavLink} to="/register">Register</NavLink>
                 </NavItem>
               </>
             }
           </Nav>
         </Collapse>
       </Navbar>
-    </div>
+    </div >
   );
 }
