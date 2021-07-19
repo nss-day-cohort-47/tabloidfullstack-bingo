@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getCommentsByPostId } from "../../modules/commentManager";
+import { deleteComment, getCommentsByPostId } from "../../modules/commentManager";
 import { getPostById } from "../../modules/postManager";
 import Post from "../post/Post";
 import Comment from "../comments/Comment";
@@ -21,6 +21,14 @@ const CommentList = () => {
     return getPostById(id).then(res => setPost(res));
   }
 
+  const handleDeleteComment = (id) => {
+    let yes = window.confirm("Are you sure you want to delete this comment?")
+    if (yes === true) {
+      deleteComment(id)
+        .then(fetchComments())
+    }
+  }
+
   useEffect(() => {
     fetchComments();
   }, []);
@@ -36,7 +44,7 @@ const CommentList = () => {
       <div className="container">
         <div className="row justify-content-center">
           {comments.map((comment) => (
-            <Comment comment={comment} key={comment.id} post={post} />
+            <Comment comment={comment} key={comment.id} post={post} handleDeleteComment={handleDeleteComment} />
           ))}
         </div>
       </div>

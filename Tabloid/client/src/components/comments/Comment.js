@@ -4,7 +4,7 @@ import { getUserProfile } from "../../modules/userProfileManager";
 
 
 // Renders a single Comment
-const Comment = ({ comment, post }) => {
+const Comment = ({ comment, post, handleDeleteComment }) => {
     const [user, setUser] = useState({})
 
     const userName = () => {
@@ -23,6 +23,7 @@ const Comment = ({ comment, post }) => {
                 <h5>Posted by: {user.displayName} </h5>
                 <p>{comment.content}</p>
                 <p>Posted on: {comment.createDateTime}</p>
+                <button type="button" className="btn btn-primary" onClick={() => handleDeleteComment(comment.id)}>Delete</button>
             </CardBody>
         </Card>
     );
