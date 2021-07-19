@@ -19,3 +19,17 @@ export const getCommentsByPostId = (id) => {
         });
     });
 };
+
+export const addComment = (comment) => {
+    return getToken().then((token) => {
+        fetch(baseUrl, {
+            method: "POST",
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(comment)
+        }).then((res) => res.json());
+    });
+};
+
