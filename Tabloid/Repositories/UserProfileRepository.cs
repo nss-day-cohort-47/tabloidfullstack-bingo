@@ -256,6 +256,35 @@ namespace Tabloid.Repositories
             }
         }
 
+        public void MakeAdmin(int id)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"UPDATE UserProfile SET UserTypeId=@UserTypeId WHERE Id=@Id";
+                    cmd.Parameters.AddWithValue("@UserTypeId", 1);
+                    cmd.Parameters.AddWithValue("@Id", id);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+        public void MakeAuthor(int id)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"UPDATE UserProfile SET UserTypeId=@UserTypeId WHERE Id=@Id";
+                    cmd.Parameters.AddWithValue("@UserTypeId", 2);
+                    cmd.Parameters.AddWithValue("@Id", id);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
         /*
         public UserProfile GetByFirebaseUserId(string firebaseUserId)
         {

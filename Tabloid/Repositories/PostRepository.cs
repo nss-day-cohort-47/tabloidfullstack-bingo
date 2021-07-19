@@ -67,7 +67,7 @@ namespace Tabloid.Repositories
                     cmd.CommandText = @"
                        SELECT p.Id, p.Title, p.Content, 
                               p.ImageLocation AS HeaderImage,
-                              p.CreateDateTime, p.PublishDateTime, p.IsApproved, 
+                              p.CreateDateTime AS PostCreateDate, p.PublishDateTime, p.IsApproved, 
                               p.CategoryId, p.UserProfileId,
                               c.[Name] AS CategoryName,
                               u.FirstName, u.LastName, u.DisplayName, 
@@ -78,8 +78,8 @@ namespace Tabloid.Repositories
                               LEFT JOIN Category c ON p.CategoryId = c.id
                               LEFT JOIN UserProfile u ON p.UserProfileId = u.id
                               LEFT JOIN UserType ut ON u.UserTypeId = ut.id
-                        WHERE PublishDateTime < SYSDATETIME() AND u.FirebaseUserId = @FirebaseUserId
-                        ORDER BY PublishDateTime DESC";
+                        WHERE u.FirebaseUserId = @FirebaseUserId
+                        ORDER BY PostCreateDate DESC";
                     DbUtils.AddParameter(cmd, "@FirebaseUserId", FirebaseUserId);
                     var reader = cmd.ExecuteReader();
 
@@ -118,7 +118,7 @@ namespace Tabloid.Repositories
                               LEFT JOIN Category c ON p.CategoryId = c.id
                               LEFT JOIN UserProfile u ON p.UserProfileId = u.id
                               LEFT JOIN UserType ut ON u.UserTypeId = ut.id
-                        WHERE PublishDateTime < SYSDATETIME() AND p.id = @id
+                        WHERE p.id = @id
                         ORDER BY PublishDateTime DESC";
                     DbUtils.AddParameter(cmd, "@id", id);
                     var reader = cmd.ExecuteReader();
@@ -133,6 +133,67 @@ namespace Tabloid.Repositories
                     reader.Close();
 
                     return post;
+                }
+            }
+        }
+
+        public void Add(Post post)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"INSERT INTO Post(
+                                                    Title, 
+                                                    Content, 
+                                                    ImageLocation, 
+                                                    CreateDateTime, 
+                                                    CategoryId, 
+                                                    UserProfileId,
+                                                    IsApproved)
+                                                    OUTPUT INSERTED.ID
+                                                    VALUES(@title, @content, 
+                                                            @imageLocation, @createDateTime, 
+                                                            @categoryId, @userProfileId, 
+                                                            @isApproved);";
+                    DbUtils.AddParameter(cmd, "@title", post.Title);
+                    DbUtils.AddParameter(cmd, "@content", post.Content);
+                    DbUtils.AddParameter(cmd, "@imageLocation", post.ImageLocation);
+                    DbUtils.AddParameter(cmd, "@createDateTime", post.CreateDateTime);
+                    DbUtils.AddParameter(cmd, "@categoryId", post.CategoryId);
+                    DbUtils.AddParameter(cmd, "@userProfileId", post.UserProfileId);
+                    DbUtils.AddParameter(cmd, "@isApproved", post.IsApproved);
+                    //DbUtils.AddParameter(cmd, "@publishDateTime", post.PublishDateTime);
+
+                    post.Id = (int)cmd.ExecuteScalar();
+                }
+            }
+        }
+
+        public void Update(Post post)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                                        UPDATE Post
+                                            Set Title = @title,
+                                            Content = @content,
+                                            ImageLocation = @imageLocation,
+                                            CategoryId = @categoryId
+                                        Where Id = @id
+                                        ";
+
+                    DbUtils.AddParameter(cmd, "@title", post.Title);
+                    DbUtils.AddParameter(cmd, "@content", post.Content);
+                    DbUtils.AddParameter(cmd, "@imageLocation", post.ImageLocation);
+                    DbUtils.AddParameter(cmd, "@categoryId", post.CategoryId);
+                    DbUtils.AddParameter(cmd, "@id", post.Id);
+
+                    cmd.ExecuteNonQuery();
                 }
             }
         }
@@ -173,6 +234,42 @@ namespace Tabloid.Repositories
             };
         }
 
+        public void DeletePost(int id)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                                        DELETE pt
+                                        FROM PostTag pt
+                                        WHERE pt.PostId = @Id;
 
+                                        DELETE c
+                                        FROM Comment c
+                                        WHERE c.PostId = @Id;
+                                        
+                                        DELETE p
+                                        FROM Post p
+                                        WHERE p.Id = @Id
+                                        ";
+                    DbUtils.AddParameter(cmd, "@Id", id);
+                    cmd.ExecuteNonQuery();
+                    //@"
+                    //                    DELETE FROM Post
+                    //                    WHERE Id in
+                    //                    (
+                    //                        SELECT p.Id
+                    //                        FROM Post p
+                    //                        INNER JOIN PostTag pt
+                    //                        ON p.Id = pt.PostId
+                    //                    )
+                    //                    DELETE FROM PostTag
+                    //                    WHERE p.Id = pt.PostId
+                    //                    ";
+                }
+            }
+        }
     }
 }

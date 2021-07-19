@@ -3,8 +3,7 @@ import { useHistory } from "react-router";
 import { useParams } from "react-router-dom";
 import { Card, CardBody } from "reactstrap";
 import { Link } from "react-router-dom";
-import { getUserProfile } from "../../modules/userProfileManager";
-import { DeactivateUser } from "../../modules/userProfileManager";
+import { getUserProfile, DeactivateUser, MakeAuthor, MakeAdmin } from "../../modules/userProfileManager";
 
 const UserProfileDetails = () => {
     const [userProfile, setUserProfile] = useState();
@@ -31,6 +30,29 @@ const UserProfileDetails = () => {
             history.push("/UserProfiles/")
         }
 
+    }
+
+    const handleMakeAdmin = (event) => {
+        //debugger
+        if (window.confirm("Are you sure you want to make this account an Admin?")) {
+            event.preventDefault()
+            MakeAdmin(userProfile.id)
+                .then(() => history.push("/UserProfiles/")
+                )
+        } else {
+
+        }
+    }
+    const handleMakeAuthor = (event) => {
+        //debugger
+        if (window.confirm("Are you sure you want to demote this account from Admin status?")) {
+            event.preventDefault()
+            MakeAuthor(userProfile.id)
+                .then(() => history.push("/UserProfiles/")
+                )
+        } else {
+
+        }
     }
 
     //* console.log("USER ID: ",id);
@@ -69,7 +91,14 @@ const UserProfileDetails = () => {
                     </div>
 
                 </CardBody>
-
+                <br />
+                {userProfile.userTypeId === 1
+                    ? <button type="button" className="btn btn-primary"
+                        onClick={handleMakeAuthor}>Demote to Author</button>
+                    : <button type="button" className="btn btn-primary"
+                        onClick={handleMakeAdmin}>Promote to Admin</button>
+                }
+                <br />
                 {/* ! NEEDS WORK */}
                 <button type="button" className="btn btn-primary"
                     onClick={handleDeactivate}>

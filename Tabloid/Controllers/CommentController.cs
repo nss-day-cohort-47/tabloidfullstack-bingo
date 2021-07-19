@@ -34,10 +34,7 @@ namespace Tabloid.Controllers
         public IActionResult Post(Comment comment)
         {
             var currentUserProfile = GetCurrentUserProfile();
-            if (currentUserProfile.UserType.Name != "admin")
-            {
-                return Unauthorized();
-            }
+            
             comment.UserProfileId = currentUserProfile.Id;
             comment.CreateDateTime = DateTime.Now;
 

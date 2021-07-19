@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from 'react';
 import { Switch, Route, Redirect } from "react-router-dom";
 import Login from "./Login";
 import Register from "./Register";
@@ -7,20 +7,40 @@ import TagList from "./tag/TagList";
 import UserProfileList from "./userProfile/UserProfileList";
 import UserProfileDetails from "./userProfile/UserProfileDetails";
 import UserProfileDeactiveList from "./userProfile/UserProfileDeactiveList";
+import { getCurrentUserType } from '../modules/userProfileManager';
 
 import CategoryList from "./categories/CategoryList";
 import PostList from "./post/PostList";
 import MyPosts from "./post/MyPosts";
 import CommentList from "./comments/CommentList";
+import CommentForm from "./comments/CommentForm";
 import TagForm from "./tag/TagForm";
 import CategoryForm from "./categories/CategoryForm";
 import EditCategory from "./categories/CategoryEdit";
 
 import PostDetails from "./post/PostDetails";
+import PostForm from "./post/PostForm";
 import TagDelete from "./tag/TagDelete";
 import TagEdit from "./tag/TagEdit";
+import EditPost from "./post/EditPost";
 
 export default function ApplicationViews({ isLoggedIn }) {
+  const [isAdmin, setIsAdmin] = useState(true);
+
+  const userIsAdmin = () => {
+    getCurrentUserType().then((userType) => {
+      if (userType.name == "Admin") {
+        setIsAdmin(true);
+      } else {
+        setIsAdmin(false)
+      }
+    });
+  };
+  useEffect(() => {
+    if (isLoggedIn) {
+      userIsAdmin();
+    }
+  }, [isLoggedIn]);
 
   return (
 
@@ -34,8 +54,16 @@ export default function ApplicationViews({ isLoggedIn }) {
           <MyPosts />
         </Route>
 
+        <Route path='/NewPost' exact>
+          {isLoggedIn ? <PostForm /> : <Redirect to='/login' />}
+        </Route>
+
         <Route path="/post/:id" exact>
-          <PostDetails />
+          {isLoggedIn ? <PostDetails /> : <Redirect to='/login' />}
+        </Route>
+
+        <Route path="/post/edit/:id" exact>
+          {isLoggedIn ? <EditPost /> : <Redirect to='/login' />}
         </Route>
 
         <Route path="/categories">
@@ -51,18 +79,22 @@ export default function ApplicationViews({ isLoggedIn }) {
           <PostList />
         </Route> */}
         <Route path="/UserProfiles" exact>
-          {isLoggedIn ? <UserProfileList /> : <Redirect to="/login" />}
+          {isLoggedIn && isAdmin ? <UserProfileList /> : <Redirect to="/login" />}
         </Route>
         <Route path="/UserProfiles/Deactivated" exact>
-          {isLoggedIn ? <UserProfileDeactiveList /> : <Redirect to="/login" />}
+          {isLoggedIn && isAdmin ? <UserProfileDeactiveList /> : <Redirect to="/login" />}
         </Route>
 
-        <Route path="/post/:id(\d+)/comments">
+        <Route path="/post/:id(\d+)/comments" exact>
           {isLoggedIn ? <CommentList /> : <Redirect to="/login" />}
         </Route>
 
+        <Route path="/post/:id(\d+)/comments/add">
+          {isLoggedIn ? <CommentForm /> : <Redirect to="/login" />}
+        </Route>
+
         <Route path="/UserProfiles/:id">
-          {isLoggedIn ? <UserProfileDetails /> : <Redirect to="/login" />}
+          {isLoggedIn && isAdmin ? <UserProfileDetails /> : <Redirect to="/login" />}
         </Route>
 
         <Route path="/login">

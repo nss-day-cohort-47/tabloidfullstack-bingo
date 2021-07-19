@@ -23,7 +23,6 @@ export const getAllUserProfilesDeactive = () => {
         }).then((res) => res.json()));
 };
 
-//! NEEDS WORK
 export const DeactivateUser = (id) => {
     return getToken().then((token) =>
         fetch(`${baseUrl}/${id}`, {
@@ -37,7 +36,6 @@ export const DeactivateUser = (id) => {
     );
 }
 
-//! NEEDS WORK
 export const ActivateUser = (id) => {
     return getToken().then((token) =>
         fetch(`${baseUrl}/${id}`, {
@@ -51,7 +49,46 @@ export const ActivateUser = (id) => {
     );
 }
 
+export const MakeAuthor = (id) => {
+    return getToken().then((token) =>
+        fetch(`${baseUrl}/MakeAuthor/${id}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
+            }
+        })
+        //.then((res) => res.json())
+    );
+}
+
+export const MakeAdmin = (id) => {
+    return getToken().then((token) =>
+        fetch(`${baseUrl}/MakeAdmin/${id}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
+            }
+        })
+        //.then((res) => res.json())
+    );
+}
 
 export const getUserProfile = (id) => {
     return fetch(`${baseUrl}/UserProfile/${id}`).then((res) => res.json());
+};
+
+
+
+
+export const getCurrentUserType = () => {
+    return getToken().then((token) =>
+        fetch(`${baseUrl}/GetCurrentUserType`, {
+            method: "GET",
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }).then((res) => res.json())
+    )
 };
