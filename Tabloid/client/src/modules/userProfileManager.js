@@ -78,3 +78,9 @@ export const MakeAdmin = (id) => {
 export const getUserProfile = (id) => {
     return fetch(`${baseUrl}/UserProfile/${id}`).then((res) => res.json());
 };
+
+
+//? 
+export const getCurrentUserType = (id) => {
+    return fetch(`${baseUrl}/UserProfile/GetCurrentUserType`).then((res) => res.json());
+};
