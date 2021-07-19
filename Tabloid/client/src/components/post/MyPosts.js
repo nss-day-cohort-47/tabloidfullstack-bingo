@@ -13,6 +13,7 @@ const MyPosts = () => {
   const fetchUserPosts = () => {
     return getAllUserPosts().then(posts => setPosts(posts))
   }
+  console.log('posts', posts)
 
   const handleDeletePost = (id) => {
     let yes = window.confirm("Are you sure you want to delete this post?")

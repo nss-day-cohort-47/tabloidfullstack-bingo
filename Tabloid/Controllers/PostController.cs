@@ -51,6 +51,19 @@ namespace Tabloid.Controllers
             return Ok(_postRepository.GetPostById(id));
         }
 
+        [HttpPost]
+        public IActionResult Add(Post post)
+        {
+            var currentUser = GetCurrentUserProfile();
+
+            post.CreateDateTime = DateTime.Now;
+            //post.PublishDateTime = DateTime.Now;
+            post.UserProfileId = currentUser.Id;
+            post.IsApproved = false;
+            _postRepository.Add(post);
+            return CreatedAtAction(nameof(GetAllUserPosts), new { id = post.Id }, post);
+        }
+
         private UserProfile GetCurrentUserProfile()
         {
             var firebaseUserId = User?.FindFirst(ClaimTypes.NameIdentifier).Value;
