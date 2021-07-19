@@ -32,7 +32,6 @@ export const TagEdit = () => {
     getTag(id);
   }, []);
 
-  console.log(singleTag);
   return (
     <>
       <h3>{singleTag.name}</h3>
@@ -41,7 +40,6 @@ export const TagEdit = () => {
         <input type="text"
           id="tagName"
           name="tagName"
-          // placeholder='name'
           onChange={handleInputChange}
           defaultValue={singleTag.name}
         ></input>
