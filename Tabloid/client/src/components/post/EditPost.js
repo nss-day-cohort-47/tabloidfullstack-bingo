@@ -1,15 +1,24 @@
-import React, { useEffect, useState } from 'react';
-import { getAllCategories } from '../../modules/categoryManager';
-import { addPost } from '../../modules/postManager';
-import { useHistory } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { editPost, getPostById } from "../../modules/postManager";
+import { Card, CardBody } from "reactstrap";
+import { useParams, Link } from "react-router-dom";
+import { dateFixer } from "../../modules/helpers";
+import { useHistory } from 'react-router';
+import { getAllCategories } from "../../modules/categoryManager";
 
-const PostForm = () => {
+//Display all published posts
+const EditPost = () => {
   const [ post, setPost ] = useState({});
+  const { id } = useParams();
+  const history = useHistory();
   const [ categorySelect, setCategorySelect ] = useState('');
   const [ categoryList, setCategoryList ] = useState([])
   const [ isLoading, setIsLoading ] = useState(false);
-  const history = useHistory()
 
+
+  const fetchPosts = () => {
+    return getPostById(id).then(post => setPost(post));
+  }
 
   //fetch list of all categories for dropdown
   useEffect(() => {
@@ -46,13 +55,17 @@ const PostForm = () => {
     setIsLoading(true);
     let newPost = { ...post };
 
-    newPost.categoryId = categorySelect;
     if (categorySelect === '') {
-      alert("Please select a category")
+      newPost.categoryId = newPost.category.id;
     } else {
-      addPost(newPost).then(() => history.push('/MyPosts'))
+      newPost.categoryId = categorySelect;
     }
+    editPost(newPost).then(() => history.push('/MyPosts'))
   }
+
+  useEffect(() => {
+    fetchPosts();
+  }, []);
 
   return (
     <>
@@ -62,13 +75,13 @@ const PostForm = () => {
 
             <label htmlFor="categories" >Choose a Category</label>
             <select value={ categorySelect } name="categories" onChange={ handleDropdownChange }>
-              <option value={ categorySelect } selected>Please Select a Category</option>
+              <option defaultValue={ post?.category?.name } >{ post?.category?.name }</option>
               { categoryList.map(c => (
                 <option
                   htmlFor={ c.name }
                   key={ c.id * Math.random() }
                   value={ c.id }
-                // onSelect={ handleControlledInputChange }
+                  selected={ post?.category?.name }
                 >
                   { c.name }
                 </option>
@@ -91,7 +104,6 @@ const PostForm = () => {
       </div>
     </>
   )
-
 };
 
-export default PostForm;
+export default EditPost;

@@ -21,6 +21,7 @@ import EditCategory from "./categories/CategoryEdit";
 import PostDetails from "./post/PostDetails";
 import PostForm from "./post/PostForm";
 import TagDelete from "./tag/TagDelete";
+import EditPost from "./post/EditPost";
 
 export default function ApplicationViews({ isLoggedIn }) {
   const [isAdmin, setIsAdmin] = useState(true);
@@ -55,8 +56,13 @@ export default function ApplicationViews({ isLoggedIn }) {
         <Route path='/NewPost' exact>
           {isLoggedIn ? <PostForm /> : <Redirect to='/login' />}
         </Route>
+
         <Route path="/post/:id" exact>
-          <PostDetails />
+          { isLoggedIn ? <PostDetails /> : <Redirect to='/login' /> }
+        </Route>
+
+        <Route path="/post/edit/:id" exact>
+          { isLoggedIn ? <EditPost /> : <Redirect to='/login' /> }
         </Route>
 
         <Route path="/categories">
