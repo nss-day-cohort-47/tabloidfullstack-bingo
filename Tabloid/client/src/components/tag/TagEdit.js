@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { getTagById, deleteTag } from "../../modules/tagManager";
-// import { deletePostTag, getAllPostTags } from "../../modules/postTagManager";
+import { getTagById, editTag } from "../../modules/tagManager";
 import { Link, useParams, useHistory } from "react-router-dom";
 
-const TagDelete = () => {
+export const TagEdit = () => {
   const [singleTag, setTag] = useState([]);
   const { id } = useParams();
   const [isLoading, setIsLoading] = useState(false);
   const history = useHistory();
-  // const [postTags, setPostTags] = useState([]);
 
   const getTag = (id) => {
     getTagById(id).then(tag => setTag(tag));
@@ -16,43 +14,48 @@ const TagDelete = () => {
     setIsLoading(false);
   };
 
-  console.log(id);
+  const handleInputChange = (evt) => {
+    const newTag = { ...singleTag }
+    let selectedVal = evt.target.value
+    newTag.name = selectedVal
+    setTag(newTag)
+  }
 
-  // const getPostTags = () => {
-  //   getAllPostTags().then(postTag => setPostTags(postTag));
-  // };
-
-
-  const DeleteSingleTag = (e) => {
+  const EditSingleTag = (e) => {
     e.preventDefault();
     setIsLoading(true);
-
-    // let postTagsToDelete = postTags.filter(postTag => postTag.TagId == singleTag.id);
-    // postTagsToDelete.map(postTag => deletePostTag(postTag.id));
-
-    deleteTag(singleTag.id)
+    editTag(singleTag)
       .then(() => history.push('/tag'))
   }
 
   useEffect(() => {
     getTag(id);
-    // getPostTags();
   }, []);
 
   console.log(singleTag);
   return (
     <>
       <h3>{singleTag.name}</h3>
+      <h3>Please change the Tag</h3>
+      <form>
+        <input type="text"
+          id="tagName"
+          name="tagName"
+          // placeholder='name'
+          onChange={handleInputChange}
+          defaultValue={singleTag.name}
+        ></input>
+      </form>
       <button
         type="button" disabled={isLoading}
-        onClick={DeleteSingleTag}
+        onClick={EditSingleTag}
         className="btn btn-primary"
-      >Delete Tag</button>
+      >Edit Tag</button>
       <Link to={"/tag"}>
         <button>Back</button>
       </Link>
     </>
   );
-};
+}
 
-export default TagDelete;
+export default TagEdit;

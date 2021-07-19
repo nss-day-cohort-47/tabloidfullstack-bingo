@@ -18,6 +18,7 @@ import EditCategory from "./categories/CategoryEdit";
 
 import PostDetails from "./post/PostDetails";
 import TagDelete from "./tag/TagDelete";
+import TagEdit from "./tag/TagEdit";
 
 export default function ApplicationViews({ isLoggedIn }) {
 
@@ -82,6 +83,10 @@ export default function ApplicationViews({ isLoggedIn }) {
 
         <Route path="/tag/delete/:id" exact>
           <TagDelete />
+        </Route>
+
+        <Route path="/tag/edit/:id" exact>
+          <TagEdit />
         </Route>
 
       </Switch>

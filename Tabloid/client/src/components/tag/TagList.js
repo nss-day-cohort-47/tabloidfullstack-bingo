@@ -14,7 +14,6 @@ const TagList = () => {
     getTags();
   }, []);
 
-  console.log(tags);
   return (
     <>
       <h3>Tags:</h3>

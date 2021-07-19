@@ -8,6 +8,7 @@ export const Tag = ({ tag }) => {
       <CardBody>
         <p>{tag.name}</p>
         <p><Link to={`/tag/delete/${tag.id}`}>Delete</Link></p>
+        <p><Link to={`/tag/edit/${tag.id}`}>Edit</Link></p>
       </CardBody>
     </Card>
   );
