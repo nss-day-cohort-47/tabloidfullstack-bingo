@@ -33,3 +33,14 @@ export const addComment = (comment) => {
     });
 };
 
+export const deleteComment = (id) => {
+    return getToken().then((token) => {
+        fetch(`${baseUrl}/${id}`, {
+            method: "DELETE",
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json"
+            }
+        });
+    });
+};
