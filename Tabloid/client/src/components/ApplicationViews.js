@@ -21,6 +21,7 @@ import EditCategory from "./categories/CategoryEdit";
 import PostDetails from "./post/PostDetails";
 import PostForm from "./post/PostForm";
 import TagDelete from "./tag/TagDelete";
+import TagEdit from "./tag/TagEdit";
 import EditPost from "./post/EditPost";
 
 export default function ApplicationViews({ isLoggedIn }) {
@@ -58,11 +59,11 @@ export default function ApplicationViews({ isLoggedIn }) {
         </Route>
 
         <Route path="/post/:id" exact>
-          { isLoggedIn ? <PostDetails /> : <Redirect to='/login' /> }
+          {isLoggedIn ? <PostDetails /> : <Redirect to='/login' />}
         </Route>
 
         <Route path="/post/edit/:id" exact>
-          { isLoggedIn ? <EditPost /> : <Redirect to='/login' /> }
+          {isLoggedIn ? <EditPost /> : <Redirect to='/login' />}
         </Route>
 
         <Route path="/categories">
@@ -114,6 +115,10 @@ export default function ApplicationViews({ isLoggedIn }) {
 
         <Route path="/tag/delete/:id" exact>
           <TagDelete />
+        </Route>
+
+        <Route path="/tag/edit/:id" exact>
+          <TagEdit />
         </Route>
 
       </Switch>

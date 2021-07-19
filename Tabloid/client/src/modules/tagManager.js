@@ -37,6 +37,18 @@ export const deleteTag = (id) => {
     }))
 };
 
+export const editTag = (tag) => {
+  return getToken().then((token) =>
+    fetch(`${baseUrl}/edit/${tag.id}`, {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(tag),
+    }))
+};
+
 export const getToken = () => firebase.auth().currentUser.getIdToken();
 
 export const getTagById = (id) => {
