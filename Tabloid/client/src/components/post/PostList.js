@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router";
 import { deletePost, getAllPublishedPosts } from "../../modules/postManager";
 import Post from "./Post";
 
 //Display all published posts
 const PostList = () => {
   const [posts, setPosts] = useState([]);
+
+  const history = useHistory();
 
   const fetchPosts = () => {
     return getAllPublishedPosts().then(posts => setPosts(posts));
@@ -14,7 +17,7 @@ const PostList = () => {
     let yes = window.confirm("Are you sure you want to delete this post?")
     if (yes === true) {
       deletePost(id)
-        .then(getAllPublishedPosts())
+        .then(() => fetchPosts())
     }
   }
 
