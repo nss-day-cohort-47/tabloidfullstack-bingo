@@ -216,6 +216,10 @@ namespace Tabloid.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
+                                        DELETE pt
+                                        FROM PostTag pt
+                                        WHERE pt.PostId = @Id;
+
                                         DELETE c
                                         FROM Comment c
                                         WHERE c.PostId = @Id;
