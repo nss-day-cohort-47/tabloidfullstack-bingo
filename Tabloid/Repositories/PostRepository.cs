@@ -208,6 +208,42 @@ namespace Tabloid.Repositories
             };
         }
 
+        public void DeletePost(int id)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                                        DELETE pt
+                                        FROM PostTag pt
+                                        WHERE pt.PostId = @Id;
 
+                                        DELETE c
+                                        FROM Comment c
+                                        WHERE c.PostId = @Id;
+                                        
+                                        DELETE p
+                                        FROM Post p
+                                        WHERE p.Id = @Id
+                                        ";
+                    DbUtils.AddParameter(cmd, "@Id", id);
+                    cmd.ExecuteNonQuery();
+                    //@"
+                    //                    DELETE FROM Post
+                    //                    WHERE Id in
+                    //                    (
+                    //                        SELECT p.Id
+                    //                        FROM Post p
+                    //                        INNER JOIN PostTag pt
+                    //                        ON p.Id = pt.PostId
+                    //                    )
+                    //                    DELETE FROM PostTag
+                    //                    WHERE p.Id = pt.PostId
+                    //                    ";
+                }
+            }
+        }
     }
 }
