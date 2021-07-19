@@ -11,18 +11,22 @@ const Post = ({ post, category, handleDeletePost }) => {
   return (
     <Card>
       <CardBody>
-        <img src={post.imageLocation} alt={`Image for ${post.title}`} />
-        <h1>{post.title}</h1>
+        <img src={ post.imageLocation } alt={ `Image for ${ post.title }` } />
+        <h1>{ post.title }</h1>
         {/* { console.log('categories', category) }
         { category.map((cat) => (
           <p>{ cat.name }</p>
         )) } */}
-        <p>Category: {category.name}</p>
-        <Link to={`/post/${post.id}`}>
+        <p>Category: { category.name }</p>
+        <Link to={ `/post/${ post.id }` }>
           <strong>Details</strong>
         </Link>
-        <p>Publish Date: {publishDate}</p>
-        <button type="button" className="btn btn-primary" onClick={() => handleDeletePost(post.id)}>Delete</button>
+        <br />
+        <Link to={ `/post/edit/${ post.id }` }>
+          <strong>Edit</strong>
+        </Link>
+        <p>Publish Date: { publishDate }</p>
+        <button type="button" className="btn btn-primary" onClick={ () => handleDeletePost(post.id) }>Delete</button>
       </CardBody>
     </Card>
   );

@@ -166,8 +166,34 @@ namespace Tabloid.Repositories
                     DbUtils.AddParameter(cmd, "@isApproved", post.IsApproved);
                     //DbUtils.AddParameter(cmd, "@publishDateTime", post.PublishDateTime);
 
-
                     post.Id = (int)cmd.ExecuteScalar();
+                }
+            }
+        }
+
+        public void Update(Post post)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                                        UPDATE Post
+                                            Set Title = @title,
+                                            Content = @content,
+                                            ImageLocation = @imageLocation,
+                                            CategoryId = @categoryId
+                                        Where Id = @id
+                                        ";
+
+                    DbUtils.AddParameter(cmd, "@title", post.Title);
+                    DbUtils.AddParameter(cmd, "@content", post.Content);
+                    DbUtils.AddParameter(cmd, "@imageLocation", post.ImageLocation);
+                    DbUtils.AddParameter(cmd, "@categoryId", post.CategoryId);
+                    DbUtils.AddParameter(cmd, "@id", post.Id);
+
+                    cmd.ExecuteNonQuery();
                 }
             }
         }

@@ -15,7 +15,7 @@ const MyPosts = () => {
     let yes = window.confirm("Are you sure you want to delete this post?")
     if (yes === true) {
       deletePost(id)
-        .then(getAllUserPosts())
+        .then(fetchUserPosts())
     }
   }
 
