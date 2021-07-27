@@ -27,8 +27,6 @@ const Post = ({ post, category, handleDeletePost }) => {
     }
   };
 
-
-
   return (
     <Card>
       <CardBody>
@@ -42,7 +40,6 @@ const Post = ({ post, category, handleDeletePost }) => {
           </button>
         </Link>
         <UserEdit />
-
       </CardBody>
     </Card>
   );

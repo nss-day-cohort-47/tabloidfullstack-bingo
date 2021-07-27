@@ -62,7 +62,7 @@ const PostForm = () => {
 
             <label htmlFor="categories" >Choose a Category</label>
             <select value={ categorySelect } name="categories" onChange={ handleDropdownChange }>
-              <option value={ categorySelect } selected>Please Select a Category</option>
+              <option selected>Please Select a Category</option>
               { categoryList.map(c => (
                 <option
                   htmlFor={ c.name }
